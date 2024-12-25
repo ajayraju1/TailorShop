@@ -1,0 +1,489 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f3f4f6;
+  background-image: url('assets/images/bg\ img.jpg');
+  background-size: cover;
+  background-position: cover;
+  color: #333;
+  overflow: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
+  animation: fadeIn 1s ease-out; /* Animation on page load */
+}
+
+
+
+/* Main App Layout */
+.app {
+  width: 100%;
+  padding: 20px;
+  height: 100vh;
+  margin: 0 auto;
+  backdrop-filter: blur(5px); /* Blurring the background */
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(45deg, #1d3557, #457b9d);
+  padding: 15px 20px;
+  margin-top: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.navbar-brand h2{
+  color: #ffffff;
+}
+
+.navbar-brand h1 {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-btn {
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e63946;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar-btn:hover {
+  background-color: #d62828;
+}
+
+.page {
+  animation: fadeIn 1s ease-out;
+}
+
+/* Responsive Navbar for mobile devices */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .navbar-links {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .navbar-btn {
+    width: 100%;
+    padding: 3px 6px;
+  }
+}
+
+/* Home Page Styling */
+.home-page {
+  margin-top: 15%;
+  text-align: center;
+  padding: 20px;
+  animation: slideUp 1s ease-out;
+}
+
+.home-page h1 {
+  color: #1d3557;
+  font-size: 38px;
+  font-weight: bold;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.measurement-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Spacing between the buttons */
+  margin-top: 20px;
+}
+
+/* Men button style */
+.men-button {
+  background-color: #1d3557; /* Dark blue */
+  color: white;
+}
+
+.men-button:hover {
+  background-color: #457b9d; /* Lighter blue on hover */
+}
+
+/* Women button style */
+.women-button {
+  background-color: #e63946; /* Red */
+  color: white;
+}
+
+.women-button:hover {
+  background-color: #d62828; /* Darker red on hover */
+}
+
+.submit-button {
+  background-color: #e63946; /* Red */
+  color: white;
+  font-size: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  width: 100%; /* Set button width */
+}
+
+.submit-button:hover {
+  background-color: #d62828;
+}
+
+/* Measurements Page Container */
+.measurements-page {
+  align-items: center;
+  padding: 30px;
+  margin: 40px auto;
+  background: linear-gradient(135deg, #c2ebed7b, #f7bcacda);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 1s ease-out; /* Animation for page load */
+}
+
+/* Page Title */
+.measurements-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #1d3557;
+  text-align: center;
+  font-weight: bold;
+  animation: slideIn 1s ease-out;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Container */
+.form-container {
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: rgba(241, 237, 237, 0.271);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Fields */
+.input-field {
+  padding: 14px 18px;
+  font-size: 1rem;
+  margin: 12px 0;
+  border: 1.5px solid #0778b0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  outline: none;
+  width: 100%;
+  background-color: #f9f9f9; 
+  color: #333; /* Dark text color */
+}
+
+.input-field:focus {
+  border: 3px solid #0f79bc;
+  background-color: #f8fbf7; /* Soft blue background on focus */
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(9, 9, 9, 0.973);
+  color: #1d3557; /* Dark blue text when focused */
+}
+
+.input-field::placeholder {
+  color: #7d8f8c; /* Lighter color for placeholder */
+  font-style: italic; /* Italicize placeholder text */
+}
+
+.input-field:focus::placeholder {
+  color: #457b9d; /* Lighter blue for placeholder text when focused */
+  font-style: normal; /* Remove italic on focus */
+}
+
+.input-field + label {
+  font-size: 1rem;
+  color: #19465d;
+  margin-bottom: 8px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+/* Measurement Card Styling */
+.measurement-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 15px;
+  border: 2px solid #1d3557;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #457b9d, #1d3557);
+  color: #fff;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeInUp 1s forwards ease-out; /* Animation for card */
+}
+
+.measurement-card:hover {
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  transform: scale(1.03); /* Slight scale effect on hover */
+}
+
+.measurement-card img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.measurement-card .measurement-input {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.measurement-card .measurement-input h3 {
+  margin: 5px;
+  color: #f1faee;
+  text-align: center;
+}
+
+.measurement-card .measurement-input input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+
+.measurement-card .measurement-input input:focus {
+  border: 3px solid #a8d5f0;
+  background-color: #f8fbf7;
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(9, 9, 9, 0.973);
+  color: #1d3557; 
+}
+
+.measurement-card div {
+  flex-grow: 1;
+}
+
+/* Arrow Buttons */
+.arrow-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.arrow {
+  background-color: #1d3557;
+  color: white;
+  font-size: 24px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: 15px;
+}
+
+.arrow:hover {
+  background-color: #457b9d;
+  transform: scale(1.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+.arrow:disabled,
+.arrow.disabled {
+  background-color: #d3d3d3;
+  color: #a9a9a9;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+  .arrow {
+    font-size: 18px;
+    padding: 8px 15px;
+  }
+}
+
+/* Customer Card Styling */
+.customer-card {
+  background: linear-gradient(120deg, #f3b8a8, #3da3c3c4);
+  color: #1d3557;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 1s forwards ease-out; /* Animation for customer card */
+}
+
+.customer-card:hover {
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+.customer-card h3 {
+  font-size: 24px;
+  color: #1d3557;
+}
+
+.storage-page h2{
+  color: #d62828;
+  margin: 15px;
+  text-align: center;
+  font-size: 28px;
+}
+.customer-card p {
+  font-size: 16px;
+  color: #000000db;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-button, .delete-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-button {
+  background-color: #457b9d;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #1d3557;
+}
+
+.delete-button {
+  background-color: #e63946;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #d00000;
+}
+
+.search-bar {
+  padding: 15px;
+  margin: 15px 0;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #0b5d90;
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-bar:focus {
+  border: 3px solid #0b5d90;
+  background-color: #f8fbf7;
+  box-shadow: 0 4px 8px rgba(9, 9, 9, 0.973);
+}
+
+/* Button Styling */
+
+/* General button style */
+.button {
+  font-size: 18px;
+  padding: 20px 40px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  transition: all 0.3s ease;
+  width: 250px; /* Set button width */
+  margin: 10px;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+
+@keyframes inputFocusAnimation {
+  0% {
+    transform: scale(1);
+    background-color: #f9f9f9;
+  }
+  100% {
+    transform: scale(1.02);
+    background-color: #bae5ef;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
