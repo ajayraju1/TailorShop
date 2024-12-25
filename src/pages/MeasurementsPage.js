@@ -55,7 +55,7 @@ const MeasurementsPage = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/customers", formData);
+      await axios.post("https://tailorlog.onrender.com/api/customers", formData);
       setShowSuccessMessage(true); // Show success message
       setTimeout(() => {
         setShowSuccessMessage(false); // Hide success message after 3 seconds
