@@ -1,87 +1,4 @@
-// import React, { useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import MeasurementCard from "../components/MeasurementCard";
-
-// // Import images correctly
-// import shoulderImage from "../assets/images/Full-Shoulder.png";
-// import chestImage from "../assets/images/Full-Sleeves.png";
-// import waistImage from "../assets/images/Waist.png";
-
-// const MeasurementsPage = () => {
-//   const { gender } = useParams();
-//   const navigate = useNavigate();
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     phone: "",
-//     gender: gender,
-//     measurements: {},
-//   });
-
-//   const measurements = [
-//     { label: "Shoulder", image: shoulderImage },
-//     { label: "Chest", image: chestImage },
-//     { label: "Waist", image: waistImage },
-//   ];
-
-//   const handleInputChange = (key, value) => {
-//     setFormData({
-//       ...formData,
-//       measurements: { ...formData.measurements, [key]: value },
-//     });
-//   };
-
-//   const handleSubmit = async () => {
-//     try {
-//       await axios.post("http://localhost:5000/api/customers", formData);
-//       alert("Customer details saved successfully!");
-//       navigate("/storage");
-//     } catch (error) {
-//       console.error("Error saving customer:", error);
-//       alert("Failed to save customer details.");
-//     }
-//   };
-
-//   return (
-//     <div className="measurements-page">
-//       <h2 className="measurements-title">
-//         {gender === "men" ? "Men's Measurements" : "Women's Measurements"}
-//       </h2>
-//       <div className="form-container">
-//         <input
-//           type="text"
-//           placeholder="Name"
-//           value={formData.name}
-//           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-//           className="input-field"
-//         />
-//         <input
-//           type="text"
-//           placeholder="Phone Number"
-//           value={formData.phone}
-//           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-//           className="input-field"
-//         />
-//         {measurements.map((item) => (
-//           <MeasurementCard
-//             key={item.label}
-//             label={item.label}
-//             image={item.image}
-//             onChange={(value) => handleInputChange(item.label.toLowerCase(), value)}
-//           />
-//         ))}
-//         <button onClick={handleSubmit} className="submit-button">
-//           Save Measurements
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MeasurementsPage;
-
-
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import MeasurementCard from "../components/MeasurementCard";
@@ -102,6 +19,9 @@ const MeasurementsPage = () => {
   });
 
   const [currentCard, setCurrentCard] = useState(0);
+  const [isEditing, setIsEditing] = useState(true); // Track if name and phone are in editing mode
+  const [isNamePhoneSaved, setIsNamePhoneSaved] = useState(false); // Track if name and phone are saved
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // State for showing success message
 
   const measurements = [
     { label: "Shoulder", image: shoulderImage },
@@ -109,6 +29,7 @@ const MeasurementsPage = () => {
     { label: "Waist", image: waistImage },
   ];
 
+  // Handle input change for measurements
   const handleInputChange = (key, value) => {
     setFormData({
       ...formData,
@@ -116,17 +37,37 @@ const MeasurementsPage = () => {
     });
   };
 
-  const handleSubmit = async () => {
+  // Save name and phone number
+  const handleSaveNameAndPhone = () => {
+    if (formData.name === "" || formData.phone === "") {
+      alert("Please enter both Name and Phone before saving.");
+      return; // Prevent submission if name or phone is empty
+    }
+    setIsEditing(false); // Switch to viewing mode after saving
+    setIsNamePhoneSaved(true); // Mark name and phone as saved
+  };
+
+  // Submit customer details (including measurements)
+  const handleSubmitMeasurements = async () => {
+    if (!isNamePhoneSaved) {
+      alert("Please save Name and Phone details first.");
+      return; // Prevent submitting measurements if name and phone are not saved
+    }
+
     try {
       await axios.post("http://localhost:5000/api/customers", formData);
-      alert("Customer details saved successfully!");
-      navigate("/storage");
+      setShowSuccessMessage(true); // Show success message
+      setTimeout(() => {
+        setShowSuccessMessage(false); // Hide success message after 3 seconds
+        navigate("/storage"); // Redirect to storage page
+      }, 3000);
     } catch (error) {
       console.error("Error saving customer:", error);
       alert("Failed to save customer details.");
     }
   };
 
+  // Navigation functions for the measurement cards
   const goToNext = () => {
     if (currentCard < measurements.length - 1) {
       setCurrentCard(currentCard + 1);
@@ -145,23 +86,44 @@ const MeasurementsPage = () => {
         {gender === "men" ? "Men's Measurements" : "Women's Measurements"}
       </h2>
       <div className="form-container">
-        <input
-          type="text"
-          placeholder="Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="input-field"
-        />
-        <input
-          type="text"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          className="input-field"
-        />
+        {/* Conditional rendering of name and phone fields */}
+        <div className="name-phone-container">
+          {isEditing ? (
+            <>
+              <input
+                type="text"
+                placeholder="Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="input-field"
+              />
+              <input
+                type="text"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="input-field"
+              />
+            </>
+          ) : (
+            <>
+              <p className="display-text">{formData.name}</p>
+              <p className="display-num">{formData.phone}</p>
+            </>
+          )}
+        </div>
 
+        {/* Button to save name and phone */}
+        <button
+          onClick={handleSaveNameAndPhone}
+          className="save-name-phone-button"
+          disabled={formData.name === "" || formData.phone === ""}
+        >
+          {isEditing ? "Save" : "Edit"}
+        </button>
+
+        {/* Displaying the current measurement card */}
         <div className="measurement-cards-row">
-          {/* Display only the current card */}
           <div className="measurement-card">
             <MeasurementCard
               key={measurements[currentCard].label}
@@ -187,9 +149,7 @@ const MeasurementsPage = () => {
             &#8592;
           </button>
           <button
-            className={`arrow right ${
-              currentCard === measurements.length - 1 ? "disabled" : ""
-            }`}
+            className={`arrow right ${currentCard === measurements.length - 1 ? "disabled" : ""}`}
             onClick={goToNext}
             disabled={currentCard === measurements.length - 1}
           >
@@ -197,10 +157,25 @@ const MeasurementsPage = () => {
           </button>
         </div>
 
-        <button onClick={handleSubmit} className="submit-button">
-          Save Measurements
-        </button>
+        {/* Show Save Measurements button only after the last measurement */}
+        {currentCard === measurements.length - 1 && isNamePhoneSaved && (
+          <button
+            onClick={handleSubmitMeasurements}
+            className="submit-button"
+          >
+            Save Measurements
+          </button>
+        )}
       </div>
+
+      {/* Success Message Overlay */}
+      {showSuccessMessage && (
+        <div className="success-overlay">
+          <div className="success-message">
+            <h3>Customer details saved successfully!</h3>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

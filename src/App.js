@@ -4,6 +4,7 @@ import { FaHome, FaUsers } from "react-icons/fa";  // Importing Font Awesome Ico
 import HomePage from "./pages/HomePage";
 import MeasurementsPage from "./pages/MeasurementsPage";
 import StoragePage from "./pages/StoragePage";
+import EditCustomerPage from "./EditCustomerPage";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/measurements/:gender" element={<MeasurementsPage />} />
           <Route path="/storage" element={<StoragePage />} />
+          <Route path="/edit-customer" element={<EditCustomerPage />} />
         </Routes>
       </div>
     </Router>

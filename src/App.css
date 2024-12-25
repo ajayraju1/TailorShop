@@ -230,6 +230,43 @@ body {
   font-weight: 600;
 }
 
+.save-name-phone-button:disabled {
+  background-color: #457b9d;
+  cursor: not-allowed;
+}
+
+.save-name-phone-button {
+  padding: 5px 13px;
+  background-color: #1d3557;
+  color: white;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.save-name-phone-button:hover {
+  background-color: #1d3557;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.display-text {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 5px 0;
+  color: #d62828;
+}
+
+.display-num {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #1d3557;
+}
+
 /* Measurement Card Styling */
 .measurement-card {
   display: flex;
@@ -330,6 +367,88 @@ body {
   box-shadow: none;
 }
 
+/* Success message overlay */
+.success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Make sure it's on top */
+  transition: opacity 0.3s ease;
+}
+
+/* Success message box */
+.success-message {
+  background-color: #457b9d; /* Green background */
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.success-message h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+  transition: top 0.3s ease, left 0.3s ease;
+}
+
+/* Modal Container */
+.modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Modal Buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.modal-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.cancel-btn {
+  background-color: #f44336; /* Red for Cancel */
+  color: white;
+}
+
+.confirm-btn {
+  background-color: #1d3557; /* Green for Confirm */
+  color: white;
+}
+
+.modal-btn:hover {
+  opacity: 0.8;
+}
+
 
 /* Add responsiveness */
 @media (max-width: 768px) {
@@ -421,6 +540,106 @@ body {
   border: 3px solid #0b5d90;
   background-color: #f8fbf7;
   box-shadow: 0 4px 8px rgba(9, 9, 9, 0.973);
+}
+
+/* Edit Customer Page */
+.edit-customer-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.edit-page-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #1d3557;
+}
+
+.customer-info {
+  text-align: left;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.customer-info .label {
+  margin: 5px 0;
+  color: #1d3557;
+}
+
+.customer-info .customer-detail {
+  color: #d00000;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.edit-customer-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.measurements-title {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #1d3557;
+}
+
+.measurement-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  position: relative;
+}
+
+input[type="number"], input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="number"]:focus, input[type="text"]:focus {
+  outline: none;
+  border-color: #24539a;
+}
+
+label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.underline {
+  height: 2px;
+  background-color: #2572ad;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.submit-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #d00000bd;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #24539a;
 }
 
 /* Button Styling */
