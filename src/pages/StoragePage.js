@@ -18,7 +18,7 @@ const StoragePage = () => {
 
   const fetchCustomers = () => {
     axios
-      .get("https://tailorlog.onrender.com/api/customers")
+      .get("https://tailorlog.onrender.com/customers")
       .then((response) => setCustomers(response.data))
       .catch((error) => console.error("Error fetching customers:", error));
   };
@@ -41,7 +41,7 @@ const StoragePage = () => {
 
   const confirmDelete = async (id) => {
     try {
-      await axios.delete(`https://tailorlog.onrender.com/api/customers/${customerToDelete}`);
+      await axios.delete(`https://tailorlog.onrender.com/customers/${customerToDelete}`);
       setCustomers(customers.filter((customer) => customer._id !== customerToDelete));
       setIsModalOpen(false);
     } catch (error) {
@@ -64,18 +64,19 @@ const StoragePage = () => {
         onChange={(e) => setSearch(e.target.value)}
         className="search-bar"
       />
-      {customers
-        .filter((customer) =>
-          customer.name.toLowerCase().includes(search.toLowerCase())
-        )
-        .map((customer) => (
-          <CustomerCard
-            key={customer._id}
-            {...customer}
-            onEdit={() => handleEdit(customer)}
-            onDelete={(event) => handleDelete(customer._id, event)}
-          />
-        ))}
+     {customers
+  .filter((customer) =>
+    customer.name.toLowerCase().includes(search.toLowerCase()) ||
+    customer.phone.toLowerCase().includes(search.toLowerCase())
+  )
+  .map((customer) => (
+    <CustomerCard
+      key={customer._id}
+      {...customer}
+      onEdit={() => handleEdit(customer)}
+      onDelete={(event) => handleDelete(customer._id, event)}
+    />
+  ))}
       
       <ConfirmationModal
         isOpen={isModalOpen}

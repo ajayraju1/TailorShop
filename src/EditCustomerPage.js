@@ -27,7 +27,7 @@ const EditCustomerPage = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `https://tailorlog.onrender.com/api/customers/${customer._id}`,
+        `https://tailorlog.onrender.com/customers/${customer._id}`,
         { measurements: formData.measurements }
       );
       alert("Customer measurements updated successfully!");

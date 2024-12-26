@@ -63,14 +63,14 @@ body {
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  background-color: #e63946;
+  background-color: #f58088;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .navbar-btn:hover {
-  background-color: #d62828;
+  background-color: #f58088;
 }
 
 .page {
@@ -122,7 +122,7 @@ body {
 
 /* Men button style */
 .men-button {
-  background-color: #1d3557; /* Dark blue */
+  background-color: #35527e; /* Dark blue */
   color: white;
 }
 
@@ -132,16 +132,16 @@ body {
 
 /* Women button style */
 .women-button {
-  background-color: #e63946; /* Red */
+  background-color: #f58088; /* Red */
   color: white;
 }
 
 .women-button:hover {
-  background-color: #d62828; /* Darker red on hover */
+  background-color: #f58088; /* Darker red on hover */
 }
 
 .submit-button {
-  background-color: #e63946; /* Red */
+  background-color: #f58088; /* Red */
   color: white;
   font-size: 15px;
   padding: 10px;
@@ -154,7 +154,7 @@ body {
 }
 
 .submit-button:hover {
-  background-color: #d62828;
+  background-color: #f58088;
 }
 
 /* Measurements Page Container */
@@ -231,20 +231,20 @@ body {
 }
 
 .save-name-phone-button:disabled {
-  background-color: #457b9d;
+  background-color: #2d6080;
   cursor: not-allowed;
 }
 
 .save-name-phone-button {
   padding: 5px 13px;
-  background-color: #1d3557;
+  background-color: #2e4c74;
   color: white;
   border-radius: 15px;
   cursor: pointer;
 }
 
 .save-name-phone-button:hover {
-  background-color: #1d3557;
+  background-color: #274672;
 }
 
 .input-field {
@@ -257,7 +257,7 @@ body {
   font-size: 20px;
   font-weight: bold;
   margin: 5px 0;
-  color: #d62828;
+  color: #f58088;
 }
 
 .display-num {
@@ -338,7 +338,7 @@ body {
 }
 
 .arrow {
-  background-color: #1d3557;
+  background-color: #35527e;
   color: white;
   font-size: 24px;
   padding: 10px 20px;
@@ -384,7 +384,7 @@ body {
 
 /* Success message box */
 .success-message {
-  background-color: #457b9d; /* Green background */
+  background-color: #335584; /* Green background */
   color: white;
   padding: 20px;
   border-radius: 8px;
@@ -436,12 +436,12 @@ body {
 }
 
 .cancel-btn {
-  background-color: #f44336; /* Red for Cancel */
+  background-color: #f58088; /* Red for Cancel */
   color: white;
 }
 
 .confirm-btn {
-  background-color: #1d3557; /* Green for Confirm */
+  background-color: #35527e; /* Green for Confirm */
   color: white;
 }
 
@@ -482,10 +482,10 @@ body {
 }
 
 .storage-page h2{
-  color: #d62828;
+  color: #f5717a;
   margin: 15px;
   text-align: center;
-  font-size: 28px;
+  font-size: 30px;
 }
 .customer-card p {
   font-size: 16px;
@@ -508,7 +508,7 @@ body {
 }
 
 .edit-button {
-  background-color: #457b9d;
+  background-color: #35527e;
   color: white;
 }
 
@@ -517,12 +517,12 @@ body {
 }
 
 .delete-button {
-  background-color: #e63946;
+  background-color: #f58088;
   color: white;
 }
 
 .delete-button:hover {
-  background-color: #d00000;
+  background-color: #f58088;
 }
 
 .search-bar {
@@ -568,7 +568,7 @@ body {
 }
 
 .customer-info .customer-detail {
-  color: #d00000;
+  color: #f58088;
   font-weight: bold;
   font-size: 16px;
 }
@@ -629,7 +629,7 @@ label {
 .submit-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #d00000bd;
+  background-color: #f58088;
   color: white;
   font-size: 16px;
   border: none;

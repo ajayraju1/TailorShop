@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import MeasurementCard from "../components/MeasurementCard";
 
-// Import images correctly
+
 import shoulderImage from "../assets/images/Full-Shoulder.png";
 import chestImage from "../assets/images/Full-Chest.png";
 import waistImage from "../assets/images/Waist.png";
@@ -55,7 +55,7 @@ const MeasurementsPage = () => {
     }
 
     try {
-      await axios.post("https://tailorlog.onrender.com/api/customers", formData);
+      await axios.post("https://tailorlog.onrender.com/customers", formData);
       setShowSuccessMessage(true); // Show success message
       setTimeout(() => {
         setShowSuccessMessage(false); // Hide success message after 3 seconds

@@ -1,7 +1,7 @@
 import React from "react";
 
 const ConfirmationModal = ({ isOpen, onConfirm, onCancel, message, position }) => {
-  if (!isOpen) return null; // If not open, return nothing (no modal)
+  if (!isOpen) return null; 
 
   return (
     <div
