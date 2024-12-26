@@ -18,7 +18,7 @@ const StoragePage = () => {
 
   const fetchCustomers = () => {
     axios
-      .get("https://tailorlog.onrender.com/customers")
+      .get("https://tailorlog.onrender.com/api/customers")
       .then((response) => setCustomers(response.data))
       .catch((error) => console.error("Error fetching customers:", error));
   };
@@ -41,7 +41,7 @@ const StoragePage = () => {
 
   const confirmDelete = async (id) => {
     try {
-      await axios.delete(`https://tailorlog.onrender.com/customers/${customerToDelete}`);
+      await axios.delete(`https://tailorlog.onrender.com/api/customers/${customerToDelete}`);
       setCustomers(customers.filter((customer) => customer._id !== customerToDelete));
       setIsModalOpen(false);
     } catch (error) {
