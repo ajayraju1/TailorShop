@@ -1,19 +1,18 @@
 /* General Reset */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", serif;
+  font-weight: 100;
+  font-style: normal;
 }
 
 body {
-  font-family: "Inter", serif;
-  font-optical-sizing: auto;
-  font-weight: 60px ;
-  font-style: normal;
-  background-color: #f3f4f6;
-  /* background-image: url('assets/images/bg\ img.jpg'); */
+    /* background-image: url('assets/images/bg\ img.jpg'); */
   background-size: cover;
-  background: linear-gradient(45deg, #96C2DB, #E5EDF1, #A1D6E2);
+  background: #e9f0fc;
   background-position: cover;
   color: #333;
   overflow: hidden;
@@ -21,8 +20,6 @@ body {
   overflow-y: auto;
   animation: fadeIn 1s ease-out; /* Animation on page load */
 }
-
-
 
 /* Main App Layout */
 .app {
@@ -38,16 +35,17 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background: linear-gradient(45deg, #D19275, #E6E6FA); */
+
   padding: 15px 20px;
   margin-top: 10px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background: #b8cff7;
+  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); */
   transition: all 0.3s ease;
 }
 
 .navbar-brand h2{
-  color: #0d3b57;
+  color: #ffffff;
 }
 
 .navbar-brand h1 {
@@ -65,9 +63,8 @@ body {
 .navbar-btn {
   font-size: 16px;
   padding: 12px 20px;
+  background: none;
   border: none;
-  border-radius: 8px;
-  background-color: #35808a;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -90,13 +87,34 @@ body {
 
   .navbar-links {
     flex-direction: row;
-    gap: 10px;
+    gap: 0px;
   }
 
   .navbar-btn {
     width: 100%;
     padding: 3px 6px;
   }
+}
+
+/* Button Styling */
+
+/* General button style */
+.button {
+  font-size: 18px;
+  font-weight: 300;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  width: 150px; /* Set button width */
+  margin: 10px;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Home Page Styling */
@@ -108,10 +126,10 @@ body {
 }
 
 .home-page h1 {
-  color: #1d3557;
-  font-size: 38px;
-  font-weight: bold;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  color: #202020;
+  font-size: 28px;
+  font-weight: 500;
+  /* text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); */
   margin-bottom: 20px;
 }
 
@@ -120,13 +138,12 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Spacing between the buttons */
   margin-top: 20px;
 }
 
 /* Men button style */
 .men-button {
-  background-color: #35808a; /* Dark blue */
+  background-color: #5973aa; /* Dark blue */
   color: white;
 }
 
@@ -136,12 +153,12 @@ body {
 
 /* Women button style */
 .women-button {
-  background-color: #35808a; /* Red */
-  color: white;
+  background-color: #fc9baf;
+  color: rgb(255, 255, 255);
 }
 
 .women-button:hover {
-  background-color: #f58088; /* Darker red on hover */
+  background-color: #f7637c; /* Darker red on hover */
 }
 
 .submit-button {
@@ -159,6 +176,12 @@ body {
 
 .submit-button:hover {
   background-color: #f58088;
+}
+
+@media (max-width: 768px) {
+  .home-page h1 {
+    font-size: 22px;
+  }
 }
 
 /* Measurements Page Container */
@@ -644,27 +667,6 @@ label {
 
 .submit-button:hover {
   background-color: #24539a;
-}
-
-/* Button Styling */
-
-/* General button style */
-.button {
-  font-size: 18px;
-  padding: 20px 40px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  text-align: center;
-  transition: all 0.3s ease;
-  width: 250px; /* Set button width */
-  margin: 10px;
-}
-
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Animations */

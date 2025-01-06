@@ -12,7 +12,7 @@ const App = () => {
       <div className="app">
         <nav className="navbar">
           <div className="navbar-brand">
-            <h2>TailorShop</h2>
+            <h2>TailorLog</h2>
           </div>
           <div className="navbar-links">
             <button className="navbar-btn" onClick={() => window.location.href = '/'}>
