@@ -6,10 +6,14 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-weight: 60px ;
+  font-style: normal;
   background-color: #f3f4f6;
-  background-image: url('assets/images/bg\ img.jpg');
+  /* background-image: url('assets/images/bg\ img.jpg'); */
   background-size: cover;
+  background: linear-gradient(45deg, #96C2DB, #E5EDF1, #A1D6E2);
   background-position: cover;
   color: #333;
   overflow: hidden;
@@ -34,7 +38,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(45deg, #1d3557, #457b9d);
+  /* background: linear-gradient(45deg, #D19275, #E6E6FA); */
   padding: 15px 20px;
   margin-top: 10px;
   border-radius: 12px;
@@ -43,7 +47,7 @@ body {
 }
 
 .navbar-brand h2{
-  color: #ffffff;
+  color: #0d3b57;
 }
 
 .navbar-brand h1 {
@@ -63,7 +67,7 @@ body {
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  background-color: #f58088;
+  background-color: #35808a;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -122,7 +126,7 @@ body {
 
 /* Men button style */
 .men-button {
-  background-color: #35527e; /* Dark blue */
+  background-color: #35808a; /* Dark blue */
   color: white;
 }
 
@@ -132,7 +136,7 @@ body {
 
 /* Women button style */
 .women-button {
-  background-color: #f58088; /* Red */
+  background-color: #35808a; /* Red */
   color: white;
 }
 
