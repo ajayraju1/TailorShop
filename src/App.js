@@ -4,7 +4,7 @@ import { FaHome, FaUsers } from "react-icons/fa";  // Importing Font Awesome Ico
 import HomePage from "./pages/HomePage";
 import MeasurementsPage from "./pages/MeasurementsPage";
 import StoragePage from "./pages/StoragePage";
-import EditCustomerPage from "./EditCustomerPage";
+import EditCustomerPage from "./pages/EditCustomerPage";
 
 const App = () => {
   return (
@@ -12,7 +12,7 @@ const App = () => {
       <div className="app">
         <nav className="navbar">
           <div className="navbar-brand">
-            <h2>TailorLog</h2>
+            <h2>TailorLog</h2> 
           </div>
           <div className="navbar-links">
             <button className="navbar-btn" onClick={() => window.location.href = '/'}>

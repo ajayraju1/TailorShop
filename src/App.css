@@ -11,7 +11,7 @@
 
 body {
   background-size: cover;
-  background: #fafafa;
+  /* background: #f4fcf9; */
   background-position: cover;
   color: #333;
   overflow: hidden;
@@ -36,20 +36,13 @@ body {
   align-items: center;
   padding: 15px 20px;
   margin: 0 0 20px 0;
-  background: #FAF3E0;
+  background: #F5F5DC;
   transition: all 0.3s ease;
 }
 
 .navbar-brand h2{
-  color: #0c0c0c;
+  color: #333333;
   font-weight: 500;
-}
-
-.navbar-brand h1 {
-  color: #0e0d0d;
-  font-size: 28px;
-  font-weight: 400;
-  transition: color 0.3s ease;
 }
 
 .navbar-links {
@@ -62,13 +55,14 @@ body {
   padding: 12px 20px;
   background: none;
   border: none;
-  color: rgb(3, 3, 3);
+  color: #333333;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .navbar-btn:hover {
   background-color: #b89743;
+  border-radius: 18px;
 }
 
 .page {
@@ -129,6 +123,7 @@ button:hover {
   padding: 0;
   margin: 0;
   animation: slideUp 1s ease-out;
+  background: #f4fcf9;
 }
 
 .home-page h1 {
@@ -177,13 +172,13 @@ button:hover {
 }
 
 .men-button {
-  background-color: #6390f1; /* Dark blue */
+  background-color: #344874; /* Dark blue */
   color: white;
   width: 122px;
 }
 
 .men-button:hover {
-  background-color: #457b9d; /* Lighter blue on hover */
+  background-color: #254457; /* Lighter blue on hover */
 }
 
 /* Women button style */
@@ -223,7 +218,7 @@ button:hover {
 .measurements-page {
   align-items: center;
   padding: 30px;
-  background: #e2f7f97b;
+  background: #f4fcf9;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   animation: fadeIn 1s ease-out; /* Animation for page load */
@@ -231,9 +226,10 @@ button:hover {
 
 /* Page Title */
 .measurements-title {
-  font-weight: 500;
+  font-weight: 300;
+  font-size: 22px;
   margin-bottom: 20px;
-  color: #1d3557;
+  color: #333333;
   text-align: center;
   animation: slideIn 1s ease-out;
   text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
@@ -246,7 +242,7 @@ button:hover {
   gap: 20px;
   padding: 20px;
   border-radius: 12px;
-  background-color: rgba(241, 237, 237, 0.271);
+  background: linear-gradient(to bottom right, #effaef, #fefefe);  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -255,36 +251,35 @@ button:hover {
   padding: 14px 18px;
   font-size: 1rem;
   margin: 12px 0;
-  border: 1.5px solid #7bd1fc;
   border-radius: 8px;
   transition: all 0.3s ease;
   outline: none;
   width: 100%;
   background-color: #f9f9f9; 
-  color: #333; /* Dark text color */
+  color: #333333; /* Dark text color */
 }
 
 .input-field:focus {
-  border: 3px solid #86cffd;
-  background-color: #f8fbf7; /* Soft blue background on focus */
+  background-color: #f8fbf7; 
+  border-color: #3f3f3f;
   transform: scale(1.02);
-  box-shadow: 0 4px 8px rgba(9, 9, 9, 0.973);
-  color: #1d3557; /* Dark blue text when focused */
+  box-shadow: 0 2px 6px rgba(27, 27, 27, 0.96);
+  color: #333333; 
 }
 
 .input-field::placeholder {
-  color: #7d8f8c; /* Lighter color for placeholder */
+  color: #333333; /* Lighter color for placeholder */
   font-style: italic; /* Italicize placeholder text */
 }
 
 .input-field:focus::placeholder {
-  color: #457b9d; /* Lighter blue for placeholder text when focused */
+  color: #272626; /* Lighter blue for placeholder text when focused */
   font-style: normal; /* Remove italic on focus */
 }
 
 .input-field + label {
   font-size: 1rem;
-  color: #19465d;
+  color: #333333;
   margin-bottom: 8px;
   display: inline-block;
   font-weight: 600;
@@ -294,17 +289,21 @@ button:hover {
   background-color: #47c84d;
   cursor: not-allowed;
 }
-
+/* 78abf8 */
 .save-name-phone-button {
   padding: 5px 13px;
-  background-color: #37ac3d;
+  background-color: #47c84d;
   color: white;
-  border-radius: 15px;
+  border-radius: 12px;
   cursor: pointer;
 }
 
 .save-name-phone-button:hover {
-  background-color: #274672;
+  background-color: #78abf8;
+}
+
+.save-name-phone-button.edit-mode {
+  background-color: #78abf8; /* Coral background for Edit state */
 }
 
 .input-field {
@@ -316,13 +315,12 @@ button:hover {
 .display-text {
   font-size: 20px;
   font-weight: bold;
-  margin: 5px 0;
-  color: #f58088;
+  color: #172c55;
 }
 
 .display-num {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 10px;
   color: #1d3557;
 }
@@ -336,17 +334,16 @@ button:hover {
   padding: 15px;
   border: 2px solid #1d3557;
   border-radius: 12px;
-  /* background: linear-gradient(145deg, #457b9d, #1d3557); */
-  color: #050505;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  color: #333333;
+  background: linear-gradient(to bottom right, #dbf1f9, #fefefe);  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   flex-wrap: wrap;
   opacity: 0;
-  animation: fadeInUp 1s forwards ease-out; /* Animation for card */
+  animation: fadeInUp 1s forwards ease-out;
 }
 
 .measurement-card:hover {
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   transform: scale(1.03); /* Slight scale effect on hover */
 }
 
@@ -364,7 +361,7 @@ button:hover {
 
 .measurement-card .measurement-input h3 {
   margin: 5px;
-  color: #030303;
+  color: #333333;
   text-align: center;
 }
 
@@ -373,16 +370,16 @@ button:hover {
   padding: 10px;
   font-size: 16px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
 }
 
 
 .measurement-card .measurement-input input:focus {
-  border: 3px solid #a8d5f0;
+  border: 2x solid #a8d5f0;
   background-color: #f8fbf7;
   transform: scale(1.02);
-  box-shadow: 0 4px 8px rgba(9, 9, 9, 0.973);
-  color: #1d3557; 
+  box-shadow: 0 2px 6px rgba(9, 9, 9, 0.973);
+  color: #090909; 
 }
 
 .measurement-card div {
@@ -398,8 +395,8 @@ button:hover {
 }
 
 .arrow {
-  background-color: #536277;
-  color: white;
+  background-color: #D3D3D3;
+  color: rgb(0, 0, 0);
   font-size: 24px;
   padding: 10px 20px;
   border: none;
@@ -414,7 +411,7 @@ button:hover {
 }
 
 .arrow:hover {
-  background-color: #457b9d;
+  background-color: #9d9a9a;
   transform: scale(1.1);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
 }
@@ -444,7 +441,7 @@ button:hover {
 
 /* Success message box */
 .success-message {
-  background-color: #335584; /* Green background */
+  background-color: #5fd48a; /* Green background */
   color: white;
   padding: 20px;
   border-radius: 8px;
@@ -471,8 +468,9 @@ button:hover {
 
 /* Modal Container */
 .modal {
+  font-size: 14px;
   background-color: #fff;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   text-align: center;
   width: 100%;
@@ -496,12 +494,12 @@ button:hover {
 }
 
 .cancel-btn {
-  background-color: #f58088; /* Red for Cancel */
+  background-color: #f87575; /* Red for Cancel */
   color: white;
 }
 
 .confirm-btn {
-  background-color: #35527e; /* Green for Confirm */
+  background-color: #5679ae; /* Green for Confirm */
   color: white;
 }
 
@@ -520,7 +518,7 @@ button:hover {
 
 /* Customer Card Styling */
 .customer-card {
-  background: linear-gradient(120deg, #f6e7e3, #cfecf5c4);
+  background: linear-gradient(120deg, #fff9f8, #e7f7fbc4);
   color: #1d3557;
   border-radius: 12px;
   padding: 20px;
@@ -541,10 +539,14 @@ button:hover {
   color: #1d3557;
 }
 
+.storage-page{
+  background: #f4fcf9;
+}
+
 .storage-page h2{
   margin: 15px;
   text-align: center;
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 300;
 }
 .customer-card p {
@@ -577,7 +579,7 @@ button:hover {
 }
 
 .delete-button {
-  background-color: #e7894a;
+  background-color: #f26d55;
   color: white;
 }
 
@@ -586,20 +588,18 @@ button:hover {
 }
 
 .search-bar {
-  padding: 15px;
-  margin: 15px 0;
+  padding-left: 30px; /* Add space for the icon inside the input */
+  padding: 8px;
   width: 100%;
-  max-width: 400px;
-  border: 1px solid #0b5d90;
-  border-radius: 8px;
-  outline: none;
+  border: 2px solid #6c6b6b;
+  border-radius: 6px;
   font-size: 16px;
 }
 
 .search-bar:focus {
-  border: 3px solid #0b5d90;
+  border: 3px solid #424242;
   background-color: #f8fbf7;
-  box-shadow: 0 4px 8px rgba(9, 9, 9, 0.973);
+  box-shadow: 0 2px 4px rgba(197, 193, 193, 0.973);
 }
 
 /* Edit Customer Page */
@@ -619,16 +619,17 @@ button:hover {
 .customer-info {
   text-align: left;
   margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .customer-info .label {
   margin: 5px 0;
-  color: #1d3557;
+  color: #090909;
+  margin-right: 2px;
 }
 
 .customer-info .customer-detail {
-  color: #f58088;
+  color: #1d3557;
   font-weight: bold;
   font-size: 16px;
 }
@@ -637,15 +638,16 @@ button:hover {
   width: 100%;
   max-width: 500px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #f4fcf9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.measurements-title {
+.measurement-title {
   font-size: 20px;
   margin-bottom: 15px;
   color: #1d3557;
+  text-align: center;
 }
 
 .measurement-section {
@@ -658,38 +660,25 @@ button:hover {
   position: relative;
 }
 
-input[type="number"], input[type="text"] {
+.edit-customer-form input[type="number"],
+.edit-customer-form input[type="text"] {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  font-size: 16px;
+  padding: 6px;
+  font-size: 15px;
   border: 2px solid #ccc;
   border-radius: 5px;
 }
 
-input[type="number"]:focus, input[type="text"]:focus {
-  outline: none;
-  border-color: #24539a;
-}
 
 label {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.underline {
-  height: 2px;
-  background-color: #2572ad;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .submit-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #f58088;
+  background-color: #53b358cc;
   color: white;
   font-size: 16px;
   border: none;
@@ -699,7 +688,7 @@ label {
 }
 
 .submit-button:hover {
-  background-color: #24539a;
+  background-color: #257d29fe;
 }
 
 /* Animations */

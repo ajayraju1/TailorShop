@@ -29,11 +29,11 @@ const StoragePage = () => {
 
   const handleDelete = (id, event) => {
     event.preventDefault();
-    
+
     const rect = event.target.getBoundingClientRect();
     setModalPosition({
       top: rect.top + window.scrollY,
-      left: rect.left + window.scrollX
+      left: rect.left + window.scrollX,
     });
     setCustomerToDelete(id);
     setIsModalOpen(true);
@@ -41,8 +41,12 @@ const StoragePage = () => {
 
   const confirmDelete = async (id) => {
     try {
-      await axios.delete(`https://tailorlog.onrender.com/api/customers/${customerToDelete}`);
-      setCustomers(customers.filter((customer) => customer._id !== customerToDelete));
+      await axios.delete(
+        `https://tailorlog.onrender.com/api/customers/${customerToDelete}`
+      );
+      setCustomers(
+        customers.filter((customer) => customer._id !== customerToDelete)
+      );
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error deleting customer:", error);
@@ -57,27 +61,31 @@ const StoragePage = () => {
   return (
     <div className="storage-page">
       <h2>All Customers</h2>
-      <input
-        type="text"
-        placeholder="Search customers"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="search-bar"
-      />
-     {customers
-  .filter((customer) =>
-    customer.name.toLowerCase().includes(search.toLowerCase()) ||
-    customer.phone.toLowerCase().includes(search.toLowerCase())
-  )
-  .map((customer) => (
-    <CustomerCard
-      key={customer._id}
-      {...customer}
-      onEdit={() => handleEdit(customer)}
-      onDelete={(event) => handleDelete(customer._id, event)}
-    />
-  ))}
-      
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search customers"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-bar"
+        />
+      </div>
+
+      {customers
+        .filter(
+          (customer) =>
+            customer.name.toLowerCase().includes(search.toLowerCase()) ||
+            customer.phone.toLowerCase().includes(search.toLowerCase())
+        )
+        .map((customer) => (
+          <CustomerCard
+            key={customer._id}
+            {...customer}
+            onEdit={() => handleEdit(customer)}
+            onDelete={(event) => handleDelete(customer._id, event)}
+          />
+        ))}
+
       <ConfirmationModal
         isOpen={isModalOpen}
         onConfirm={confirmDelete}

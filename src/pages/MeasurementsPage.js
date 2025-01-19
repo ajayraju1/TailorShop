@@ -4,9 +4,22 @@ import axios from "axios";
 import MeasurementCard from "../components/MeasurementCard";
 
 
-import shoulderImage from "../assets/images/Full-Shoulder.png";
-import chestImage from "../assets/images/Full-Chest.png";
-import waistImage from "../assets/images/Waist.png";
+import jacketImage from "../assets/images/Jacket.png"; 
+import ankleImage from "../assets/images/Ankle.png"; 
+import bicepImage from "../assets/images/Bicep.png"; 
+import fullChestImage from "../assets/images/Full-Chest.png"; 
+import fullCrotchImage from "../assets/images/Full-Crotch.png"; 
+import fullShoulderImage from "../assets/images/Full-Shoulder.png"; 
+import fullSleevesImage from "../assets/images/Full-Sleeves.png"; 
+import hipsImage from "../assets/images/Hips.png"; 
+import neckImage from "../assets/images/Neck.png"; 
+import thighImage from "../assets/images/Thigh.png"; 
+import trouserHipsImage from "../assets/images/Trouser-Hips.png"; 
+import trouserLengthImage from "../assets/images/Trouser-Length-202x300.png"; 
+import trouserWaistImage from "../assets/images/Trouser-Waist.png"; 
+import waistImage from "../assets/images/Waist.png"; 
+
+
 
 const MeasurementsPage = () => {
   const { gender } = useParams();
@@ -24,10 +37,21 @@ const MeasurementsPage = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false); // State for showing success message
 
   const measurements = [
-    { label: "Shoulder", image: shoulderImage },
-    { label: "Chest", image: chestImage },
+    { label: "Neck", image: neckImage },
+    { label: "Full Shoulder", image: fullShoulderImage },
+    { label: "Full Sleeves", image: fullSleevesImage },
+    { label: "Bicep", image: bicepImage },
+    { label: "Full Chest", image: fullChestImage },
     { label: "Waist", image: waistImage },
-  ];
+    { label: "Jacket", image: jacketImage },
+    { label: "Hips", image: hipsImage },
+    { label: "Thigh", image: thighImage },
+    { label: "Trouser Waist", image: trouserWaistImage },
+    { label: "Trouser Hips", image: trouserHipsImage },
+    { label: "Trouser Length", image: trouserLengthImage },
+    { label: "Ankle", image: ankleImage },
+    { label: "Full Crotch", image: fullCrotchImage }
+  ];  
 
   // Handle input change for measurements
   const handleInputChange = (key, value) => {
@@ -98,7 +122,7 @@ const MeasurementsPage = () => {
                 className="input-field"
               />
               <input
-                type="text"
+                type="number"
                 placeholder="Phone Number"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -116,7 +140,7 @@ const MeasurementsPage = () => {
         {/* Button to save name and phone */}
         <button
           onClick={handleSaveNameAndPhone}
-          className="save-name-phone-button"
+          className={`save-name-phone-button ${isEditing ? "save-mode" : "edit-mode"}`}
           disabled={formData.name === "" || formData.phone === ""}
         >
           {isEditing ? "Save" : "Edit"}
