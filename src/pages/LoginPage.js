@@ -134,7 +134,7 @@ const LoginPage = ({ onLogin }) => {
         pin: pin.join("")
       });
       console.log(response.data.message);
-      onLogin(); // Call onLogin after successful login
+      onLogin(); // Convert this function after successfull login it should redirect to home page
     } catch (error) {
       console.error("Error logging in:", error);
     }
