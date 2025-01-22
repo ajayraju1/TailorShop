@@ -151,7 +151,7 @@
   
   .navigation-buttons button {
     padding: 8px 16px;
-    background-color: #35527e;
+    background-color: #618ac6;
     color: white;
     border: none;
     border-radius: 20px;
@@ -160,7 +160,7 @@
   }
   
   .navigation-buttons button:hover {
-    background-color: #457b9d;
+    background-color: #5a849e;
     transform: scale(1.05);
   }
   

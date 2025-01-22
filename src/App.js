@@ -8,6 +8,7 @@ import EditCustomerPage from "./pages/EditCustomerPage";
 import LoginPage from "./pages/LoginPage";
 import CategorySelectionPage from "./pages/CategorySelectionPage";
 import MeasurementInputPage from "./pages/MeasurementInputPage";
+import CustomerDetailPage from "./pages/CustomerDetailPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
           <Route path="/measurements/:gender" element={isAuthenticated ? <MeasurementsPage /> : <Navigate to="/login" />} />
           <Route path="/storage" element={isAuthenticated ? <StoragePage /> : <Navigate to="/login" />} />
+          <Route path="/customer-detail/:customerId" element={<CustomerDetailPage />} />
           <Route path="/edit-customer" element={isAuthenticated ? <EditCustomerPage /> : <Navigate to="/login" />} />
           <Route path="/measurements/:gender/categories" element={isAuthenticated ? <CategorySelectionPage /> : <Navigate to="/login" />} />
           <Route path="/measurements/:gender/:category" element={isAuthenticated ? <MeasurementInputPage /> : <Navigate to="/login" />} />

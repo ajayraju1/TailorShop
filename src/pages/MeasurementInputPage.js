@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import MeasurementCard from "../components/MeasurementCard";
@@ -24,9 +24,11 @@ import fullCrotchImage from "../assets/images/Full-Crotch.png";
 const MeasurementInputPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { name, phone, gender, category } = location.state || {};
+  const { name, phone, category } = location.state || {};
   const [currentIndex, setCurrentIndex] = useState(0);
   const [measurements, setMeasurements] = useState({});
+  const [showSuccess, setShowSuccess] = useState(false);
+  const inputRef = useRef(null);
 
   const shirtMeasurements = [
     { label: "Neck", image: neckImage },
@@ -36,7 +38,6 @@ const MeasurementInputPage = () => {
     { label: "Full Shoulder", image: fullShoulderImage },
     { label: "Bicep", image: bicepImage },
     { label: "Full Sleeves", image: fullSleevesImage },
-    
   ];
 
   const pantMeasurements = [
@@ -51,6 +52,13 @@ const MeasurementInputPage = () => {
 
   const currentMeasurements = category === 'shirt' ? shirtMeasurements : pantMeasurements;
 
+  useEffect(() => {
+    // Focus the input field whenever currentIndex changes
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [currentIndex]);
+
   const handleNext = () => {
     if (currentIndex < currentMeasurements.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -63,7 +71,6 @@ const MeasurementInputPage = () => {
     }
   };
 
-
   const handleMeasurementChange = (value) => {
     setMeasurements({
       ...measurements,
@@ -73,41 +80,59 @@ const MeasurementInputPage = () => {
 
   const handleSubmit = async () => {
     try {
+      // Check if all measurements are entered
       const allMeasurementsEntered = currentMeasurements.every(
-        m => measurements[m.label.toLowerCase().replace(' ', '_')]
+        m => measurements[m.label.toLowerCase().replace(' ', '_')] != null
       );
   
       if (!allMeasurementsEntered) {
-        alert("Please enter all measurements before saving");
+        alert("Please enter all measurements before saving.");
         return;
       }
   
-      // Restructure the measurements object to match the backend schema
+      // Validate customer data (name and phone)
+      if (!name || !phone) {
+        alert("Name and phone number are required.");
+        return;
+      }
+  
+      // Structure the measurements object to match the backend schema
       const structuredMeasurements = {};
       currentMeasurements.forEach(measurement => {
         const key = measurement.label.toLowerCase().replace(' ', '_');
         structuredMeasurements[key] = measurements[key] || 0; // Default to 0 if no value
       });
   
+      // Update the measurementData to pass name and phone at the top level
       const measurementData = {
-        customerInfo: {
-          name,
-          phone,
-          gender
-        },
-        category,
+        name,           // Pass name directly
+        mobile: phone,  // Pass phone as 'mobile'
+        category,       // Pass category
         measurements: structuredMeasurements
       };
+  
+      console.log('Measurement Data:', measurementData); // For debugging
   
       const response = await axios.post("https://tailorlog.onrender.com/api/customers", measurementData);
   
       if (response.data) {
-        alert("Measurements saved successfully!");
-        navigate("/storage");
+        setShowSuccess(true);
+        // Navigate after showing success message for 2 seconds
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate("/storage");
+        }, 2000);
       }
     } catch (error) {
-      console.error("Error details:", error.response?.data); // Log detailed error from server
-      alert("Failed to save measurements. Please try again.");
+      // Log the full error details for better debugging
+      console.error("Error details:", error.response ? error.response.data : error.message); // Log full error data
+      
+      if (error.response) {
+        console.error("Backend error response:", error.response.data);
+        alert(`Failed to save measurements. Error: ${error.response.data.message || 'Unknown error'}`);
+      } else {
+        alert("Network error or server is down. Please try again later.");
+      }
     }
   };
   
@@ -115,10 +140,9 @@ const MeasurementInputPage = () => {
   return (
     <div className="measurement-input-page">
       <div className="customer-info">
-        <p>Name: {name}</p>
-        <p>Phone: {phone}</p>
+        <p>{name}</p>
+        <p>{phone}</p>
       </div>
-
 
       <h2>{category.charAt(0).toUpperCase() + category.slice(1)} Measurements</h2>
 
@@ -128,6 +152,7 @@ const MeasurementInputPage = () => {
         </div>
 
         <MeasurementCard
+          ref={inputRef}
           label={currentMeasurements[currentIndex].label}
           image={currentMeasurements[currentIndex].image}
           onChange={handleMeasurementChange}
@@ -147,8 +172,16 @@ const MeasurementInputPage = () => {
           )}
         </div>
       </div>
+
+      {showSuccess && (
+        <div className="success-overlay">
+          <div className="success-message">
+            <h3>Measurements saved successfully!</h3>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default MeasurementInputPage; 
+export default MeasurementInputPage;

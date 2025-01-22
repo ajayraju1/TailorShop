@@ -26,18 +26,18 @@ const CategorySelectionPage = () => {
   return (
     <div className="category-page">
       <div className="customer-info">
-        <p>Name: {name}</p>
-        <p>Phone: {phone}</p>
+        <p>{name}</p>
+        <p>{phone}</p>
       </div>
 
       <div className="category-selection">
-        <h2>Select Measurement</h2>
+        <h2>Select Item</h2>
         <select 
           value={selectedCategory} 
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="category-dropdown"
         >
-          <option value="">Select Category</option>
+          <option value="">Select </option>
           <option value="shirt">Shirt</option>
           <option value="pant">Pant</option>
         </select>

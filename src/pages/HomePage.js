@@ -9,7 +9,7 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <h1>Add Measurements</h1>
+      <h1>Add Customer</h1>
       <div className="measurement-options">
         {/* Men Section */}
         <div className="category-card">

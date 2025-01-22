@@ -19,9 +19,21 @@ const StoragePage = () => {
   const fetchCustomers = () => {
     axios
       .get("https://tailorlog.onrender.com/api/customers")
-      .then((response) => setCustomers(response.data))
+      .then((response) => {
+        // console.log("Fetched customers:", response.data);  // Log the customer data
+        const normalizedCustomers = response.data.map((customer) => {
+          // Normalize phone field to be 'phone'
+          if (customer.mobile) {
+            customer.phone = customer.mobile;
+            delete customer.mobile; // Remove mobile if it's set
+          }
+          return customer;
+        });
+        setCustomers(normalizedCustomers);
+      })
       .catch((error) => console.error("Error fetching customers:", error));
   };
+  
 
   const handleEdit = (customer) => {
     navigate(`/edit-customer`, { state: { customer } });
@@ -77,14 +89,18 @@ const StoragePage = () => {
             customer.name.toLowerCase().includes(search.toLowerCase()) ||
             customer.phone.toLowerCase().includes(search.toLowerCase())
         )
-        .map((customer) => (
-          <CustomerCard
-            key={customer._id}
-            {...customer}
-            onEdit={() => handleEdit(customer)}
-            onDelete={(event) => handleDelete(customer._id, event)}
-          />
-        ))}
+        .map((customer) => {
+          // console.log("Customer card props:", customer);  // Log the customer object for each card
+          return (
+            <CustomerCard
+              key={customer._id}
+              name={customer.name}
+              phone={customer.phone}
+              onEdit={() => handleEdit(customer)}
+              onDelete={(event) => handleDelete(customer._id, event)}
+            />
+          );
+        })}
 
       <ConfirmationModal
         isOpen={isModalOpen}

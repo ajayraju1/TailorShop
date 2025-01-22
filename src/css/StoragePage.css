@@ -25,6 +25,12 @@
   box-shadow: 0 2px 4px rgba(197, 193, 193, 0.973);
 }
 
+customer-info {
+  /* background: #f4fcf9; */
+  padding: 15px;
+  border-radius: 8px;
+}
+
 .customer-card {
   background: linear-gradient(120deg, #fff9f8, #e7f7fbc4);
   color: #1d3557;

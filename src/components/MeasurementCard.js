@@ -1,17 +1,20 @@
-const MeasurementCard = ({ label, onChange, value, image }) => {
+import React, { forwardRef } from 'react';
+
+const MeasurementCard = forwardRef(({ label, image, onChange, value }, ref) => {
   return (
     <div className="measurement-card">
       <img src={image} alt={label} className="measurement-image" />
-      <label className="measurement-label">{label}</label>
+      <h3>{label}</h3>
       <input
+        ref={ref}
         type="number"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="measurement-input"
-        placeholder={`Enter ${label}`}
+        placeholder="Enter"
       />
     </div>
   );
-};
+});
 
 export default MeasurementCard;

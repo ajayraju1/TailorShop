@@ -29,7 +29,8 @@ const MeasurementsPage = () => {
   return (
     <div className="measurements-page">
       <h2 className="measurements-title">
-        {gender === "men" ? "Men's Measurements" : "Women's Measurements"}
+        {/* {gender === "men" ? "Men's Measurements" : "Women's Measurements"} */}
+        Customer Details
       </h2>
       
       <div className="form-container">
