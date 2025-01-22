@@ -1,10 +1,12 @@
 .login-page {
     max-width: 400px;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     text-align: center;
+    background: linear-gradient(to bottom right, #effaef, #fefefe);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
   
   .pin-input {
@@ -14,13 +16,19 @@
   }
   
   .pin-box {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     text-align: center;
     margin: 0 5px;
     font-size: 18px;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 4px;
+  }
+  
+  .pin-box:focus {
+    border-color: #78abf8;
+    outline: none;
+    box-shadow: 0 0 5px rgba(120, 171, 248, 0.5);
   }
   
   .change-pin-section {
@@ -30,21 +38,30 @@
   button {
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
-    background-color: #007BFF;
+    border-radius: 8px;
+    background-color: #78abf8;
     color: white;
     cursor: pointer;
+    transition: all 0.3s ease;
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: #5679ae;
+    transform: scale(1.05);
   }
   
-  input[type="text"], input[type="password"] {
+  input[type="tel"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  input[type="tel"]:focus {
+    border: 2px solid  #151515;
+    outline: none;
+    box-shadow: 0 4px 5px rgba(59, 60, 61, 0.5);
   }
   

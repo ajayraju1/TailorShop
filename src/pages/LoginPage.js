@@ -9,12 +9,40 @@ const LoginPage = ({ onLogin }) => {
   const [pin, setPin] = useState(Array(6).fill(""));
 
   const handlePinChange = (value, index) => {
-    const newPin = [...pin];
-    newPin[index] = value;
-    setPin(newPin);
+    // Only allow numbers
+    if (/^\d?$/.test(value)) {
+      const newPin = [...pin];
+      newPin[index] = value;
+      setPin(newPin);
+      
+      // Move to next input if a digit was entered and there is a next input
+      if (value && index < pin.length - 1) {
+        const nextInput = document.querySelectorAll('.pin-box')[index + 1];
+        if (nextInput) {
+          nextInput.focus();
+        }
+      }
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    // Handle backspace
+    if (e.key === 'Backspace' && !pin[index] && index > 0) {
+      // Move to previous input if current input is empty
+      const prevInput = document.querySelectorAll('.pin-box')[index - 1];
+      if (prevInput) {
+        prevInput.focus();
+      }
+    }
   };
 
   const handleLogin = async () => {
+    // Validate phone number before login
+    if (phoneNumber.length !== 10) {
+      alert("Please enter a valid 10-digit phone number");
+      return;
+    }
+
     try {
       const response = await axios.post("https://tailorlog.onrender.com/api/users/login", {
         phone: phoneNumber,
@@ -32,19 +60,29 @@ const LoginPage = ({ onLogin }) => {
     <div className="login-page">
       <h2>Login</h2>
       <input
-        type="text"
+        type="tel"
         placeholder="Phone Number"
         value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        maxLength="10"
+        onChange={(e) => {
+          // Only allow numbers and maximum 10 digits
+          const value = e.target.value;
+          if (/^\d*$/.test(value) && value.length <= 10) {
+            setPhoneNumber(value);
+          }
+        }}
       />
       <div className="pin-input">
         {pin.map((digit, index) => (
           <input
             key={index}
-            type="password"
+            type="text"
+            inputMode="numeric"
             maxLength="1"
             value={digit}
             onChange={(e) => handlePinChange(e.target.value, index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            onClick={(e) => e.target.select()}
             className="pin-box"
           />
         ))}

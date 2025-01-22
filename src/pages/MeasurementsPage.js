@@ -1,325 +1,29 @@
-// import React, { useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import MeasurementCard from "../components/MeasurementCard";
-
-
-// import jacketImage from "../assets/images/Jacket.png"; 
-// import ankleImage from "../assets/images/Ankle.png"; 
-// import bicepImage from "../assets/images/Bicep.png"; 
-// import fullChestImage from "../assets/images/Full-Chest.png"; 
-// import fullCrotchImage from "../assets/images/Full-Crotch.png"; 
-// import fullShoulderImage from "../assets/images/Full-Shoulder.png"; 
-// import fullSleevesImage from "../assets/images/Full-Sleeves.png"; 
-// import hipsImage from "../assets/images/Hips.png"; 
-// import neckImage from "../assets/images/Neck.png"; 
-// import thighImage from "../assets/images/Thigh.png"; 
-// import trouserHipsImage from "../assets/images/Trouser-Hips.png"; 
-// import trouserLengthImage from "../assets/images/Trouser-Length-202x300.png"; 
-// import trouserWaistImage from "../assets/images/Trouser-Waist.png"; 
-// import waistImage from "../assets/images/Waist.png"; 
-
-
-
-// const MeasurementsPage = () => {
-//   const { gender } = useParams();
-//   const navigate = useNavigate();
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     phone: "",
-//     gender: gender,
-//     measurements: {},
-//   });
-
-//   const [currentCard, setCurrentCard] = useState(0);
-//   const [isEditing, setIsEditing] = useState(true); // Track if name and phone are in editing mode
-//   const [isNamePhoneSaved, setIsNamePhoneSaved] = useState(false); // Track if name and phone are saved
-//   const [showSuccessMessage, setShowSuccessMessage] = useState(false); // State for showing success message
-
-//   const measurements = [
-//     { label: "Neck", image: neckImage },
-//     { label: "Full Shoulder", image: fullShoulderImage },
-//     { label: "Full Sleeves", image: fullSleevesImage },
-//     { label: "Bicep", image: bicepImage },
-//     { label: "Full Chest", image: fullChestImage },
-//     { label: "Waist", image: waistImage },
-//     { label: "Jacket", image: jacketImage },
-//     { label: "Hips", image: hipsImage },
-//     { label: "Thigh", image: thighImage },
-//     { label: "Trouser Waist", image: trouserWaistImage },
-//     { label: "Trouser Hips", image: trouserHipsImage },
-//     { label: "Trouser Length", image: trouserLengthImage },
-//     { label: "Ankle", image: ankleImage },
-//     { label: "Full Crotch", image: fullCrotchImage }
-//   ];  
-
-//   // Handle input change for measurements
-//   const handleInputChange = (key, value) => {
-//     setFormData({
-//       ...formData,
-//       measurements: { ...formData.measurements, [key]: value },
-//     });
-//   };
-
-//   // Save name and phone number
-//   const handleSaveNameAndPhone = () => {
-//     if (formData.name === "" || formData.phone === "") {
-//       alert("Please enter both Name and Phone before saving.");
-//       return; // Prevent submission if name or phone is empty
-//     }
-//     setIsEditing(false); // Switch to viewing mode after saving
-//     setIsNamePhoneSaved(true); // Mark name and phone as saved
-//   };
-
-//   // Submit customer details (including measurements)
-//   const handleSubmitMeasurements = async () => {
-//     if (!isNamePhoneSaved) {
-//       alert("Please save Name and Phone details first.");
-//       return; // Prevent submitting measurements if name and phone are not saved
-//     }
-
-//     try {
-//       await axios.post("https://tailorlog.onrender.com/api/customers", formData);
-//       setShowSuccessMessage(true); // Show success message
-//       setTimeout(() => {
-//         setShowSuccessMessage(false); // Hide success message after 3 seconds
-//         navigate("/storage"); // Redirect to storage page
-//       }, 3000);
-//     } catch (error) {
-//       console.error("Error saving customer:", error);
-//       alert("Failed to save customer details.");
-//     }
-//   };
-
-//   // Navigation functions for the measurement cards
-//   const goToNext = () => {
-//     if (currentCard < measurements.length - 1) {
-//       setCurrentCard(currentCard + 1);
-//     }
-//   };
-
-//   const goToPrevious = () => {
-//     if (currentCard > 0) {
-//       setCurrentCard(currentCard - 1);
-//     }
-//   };
-
-//   return (
-//     <div className="measurements-page">
-//       <h2 className="measurements-title">
-//         {gender === "men" ? "Men's Measurements" : "Women's Measurements"}
-//       </h2>
-//       <div className="form-container">
-//         <div className="name-phone-container">
-//           {isEditing ? (
-//             <>
-//               <input
-//                 type="text"
-//                 placeholder="Name"
-//                 value={formData.name}
-//                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-//                 className="input-field"
-//               />
-//               <input
-//                 type="number"
-//                 placeholder="Phone Number"
-//                 value={formData.phone}
-//                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-//                 className="input-field"
-//               />
-//             </>
-//           ) : (
-//             <>
-//               <p className="display-text">{formData.name}</p>
-//               <p className="display-num">{formData.phone}</p>
-//             </>
-//           )}
-//         </div>
-
-//         {/* Button to save name and phone */}
-//         <button
-//           onClick={handleSaveNameAndPhone}
-//           className={`save-name-phone-button ${isEditing ? "save-mode" : "edit-mode"}`}
-//           disabled={formData.name === "" || formData.phone === ""}
-//         >
-//           {isEditing ? "Save" : "Edit"}
-//         </button>
-
-//         {/* Displaying the current measurement card */}
-//         <div className="measurement-cards-row">
-//           <div className="measurement-card">
-//             <MeasurementCard
-//               key={measurements[currentCard].label}
-//               label={measurements[currentCard].label}
-//               image={measurements[currentCard].image}
-//               onChange={(value) =>
-//                 handleInputChange(
-//                   measurements[currentCard].label.toLowerCase(),
-//                   value
-//                 )
-//               }
-//             />
-//           </div>
-//         </div>
-
-//         {/* Navigation Arrows */}
-//         <div className="arrow-container">
-//           <button
-//             className={`arrow left ${currentCard === 0 ? "disabled" : ""}`}
-//             onClick={goToPrevious}
-//             disabled={currentCard === 0}
-//           >
-//             &#8592;
-//           </button>
-//           <button
-//             className={`arrow right ${currentCard === measurements.length - 1 ? "disabled" : ""}`}
-//             onClick={goToNext}
-//             disabled={currentCard === measurements.length - 1}
-//           >
-//             &#8594;
-//           </button>
-//         </div>
-
-//         {/* Show Save Measurements button only after the last measurement */}
-//         {currentCard === measurements.length - 1 && isNamePhoneSaved && (
-//           <button
-//             onClick={handleSubmitMeasurements}
-//             className="submit-button"
-//           >
-//             Save Measurements
-//           </button>
-//         )}
-//       </div>
-
-//       {/* Success Message Overlay */}
-//       {showSuccessMessage && (
-//         <div className="success-overlay">
-//           <div className="success-message">
-//             <h3>Customer details saved successfully!</h3>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default MeasurementsPage;
-
-
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import MeasurementCard from "../components/MeasurementCard";
-
-// Import your images
-import jacketImage from "../assets/images/Jacket.png"; 
-import ankleImage from "../assets/images/Ankle.png"; 
-import bicepImage from "../assets/images/Bicep.png"; 
-import fullChestImage from "../assets/images/Full-Chest.png"; 
-import fullCrotchImage from "../assets/images/Full-Crotch.png"; 
-import fullShoulderImage from "../assets/images/Full-Shoulder.png"; 
-import fullSleevesImage from "../assets/images/Full-Sleeves.png"; 
-import hipsImage from "../assets/images/Hips.png"; 
-import neckImage from "../assets/images/Neck.png"; 
-import thighImage from "../assets/images/Thigh.png"; 
-import trouserLengthImage from "../assets/images/Trouser-Length-202x300.png"; 
-import trouserWaistImage from "../assets/images/Trouser-Waist.png"; 
-import waistImage from "../assets/images/Waist.png";  
+import '../css/MeasurementsPage.css';
 
 const MeasurementsPage = () => {
   const { gender } = useParams();
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     gender: gender,
-    measurements: {},
   });
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // For image navigation
-  const [isEditing, setIsEditing] = useState(true); // Track if name and phone are in editing mode
-  const [isNamePhoneSaved, setIsNamePhoneSaved] = useState(false); // Track if name and phone are saved
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // State for showing success message
-  const [activeMeasurementCategory, setActiveMeasurementCategory] = useState(""); // Shirt or Pant
-  const [showMeasurementForm, setShowMeasurementForm] = useState(false);
-
-  const measurements = {
-    shirt: [
-      { label: "Neck", image: neckImage },
-      { label: "Chest", image: fullChestImage },
-      { label: "Waist", image: waistImage },
-      { label: "Shoulder", image: fullShoulderImage },
-      { label: "Sleeves", image: fullSleevesImage },
-      { label: "Bicep", image: bicepImage },
-      { label: "Jacket", image: jacketImage },
-    ],
-    pant: [
-      { label: "Trouser Waist", image: trouserWaistImage },
-      { label: "Hips", image: hipsImage },
-      { label: "Thigh", image: thighImage },
-      { label: "Trouser Length", image: trouserLengthImage },
-      { label: "Ankle", image: ankleImage },
-      { label: "Full Crotch", image: fullCrotchImage },
-    ]
-  };
-
-  // Handle input change for measurements
-  const handleInputChange = (label, value) => { 
-    setFormData((prevFormData) => ({ 
-      ...prevFormData, measurements: { 
-        ...prevFormData.measurements, [label]: value,
-       }, 
-      })); 
-    };
-
-  // Save name and phone number
-  const handleSaveNameAndPhone = () => {
+  const handleNext = () => {
     if (formData.name === "" || formData.phone === "") {
-      alert("Please enter both Name and Phone before saving.");
-      return; // Prevent submission if name or phone is empty
+      alert("Please enter both Name and Phone before proceeding.");
+      return;
     }
-    setIsEditing(false); // Switch to viewing mode after saving
-    setIsNamePhoneSaved(true); // Mark name and phone as saved
-  };
-
-  // Handle measurement category selection
-  const handleMeasurementToggle = (category) => {
-    if (category === activeMeasurementCategory) {
-      setShowMeasurementForm(false);
-      setActiveMeasurementCategory(""); 
-    } else {
-      setActiveMeasurementCategory(category);
-      setCurrentImageIndex(0); // Reset index when switching categories
-      setShowMeasurementForm(true); // Show the measurement form
-    }
-  };
-
-  // Handle left/right navigation with arrow buttons
-  const handleArrowButtonNavigation = (direction) => {
-    if (direction === "right") {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % measurements[activeMeasurementCategory].length);
-    } else if (direction === "left") {
-      setCurrentImageIndex((prevIndex) => (prevIndex - 1 + measurements[activeMeasurementCategory].length) % measurements[activeMeasurementCategory].length);
-    }
-  };
-
-  const handleSubmitMeasurements = async () => {
-    if (!isNamePhoneSaved) {
-      alert("Please save Name and Phone details first.");
-      return; // Prevent submitting measurements if name and phone are not saved
-    }
-    try {
-      await axios.post("https://tailorlog.onrender.com/api/customers", formData);
-      setShowSuccessMessage(true); // Show success message
-      setTimeout(() => {
-        setShowSuccessMessage(false); // Hide success message after 3 seconds
-        navigate("/storage"); // Redirect to storage page
-      }, 3000);
-    } catch (error) {
-      console.error("Error saving customer:", error);
-      alert("Failed to save customer details.");
-    }
+    // Navigate to category selection page with the form data
+    navigate(`/measurements/${gender}/categories`, { 
+      state: { 
+        name: formData.name, 
+        phone: formData.phone,
+        gender: gender 
+      } 
+    });
   };
 
   return (
@@ -327,87 +31,39 @@ const MeasurementsPage = () => {
       <h2 className="measurements-title">
         {gender === "men" ? "Men's Measurements" : "Women's Measurements"}
       </h2>
-    
-      <div className="name-phone-container">
-        {isEditing ? (
-          <>
-            <input
-              type="text"
-              placeholder="Name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="input-field"
-            />
-            <input
-              type="number"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="input-field"
-            />
-          </>
-        ) : (
-          <>
-            <p className="display-text">{formData.name}</p>
-            <p className="display-num">{formData.phone}</p>
-          </>
-        )}
-      </div>
-
-      <button
-        onClick={handleSaveNameAndPhone}
-        className={`save-name-phone-button ${isEditing ? "save-mode" : "edit-mode"}`}
-        disabled={formData.name === "" || formData.phone === ""}
-      >
-        {isEditing ? "Save" : "Edit"}
-      </button>
-
-      <div className="category-buttons">
-        <button onClick={() => handleMeasurementToggle("shirt")}>Shirt Measurements</button>
-        <button onClick={() => handleMeasurementToggle("pant")}>Pant Measurements</button>
-      </div>
-
+      
       <div className="form-container">
-        {showMeasurementForm && activeMeasurementCategory && (
-          <div className="measurement-form">
-            {measurements[activeMeasurementCategory] && measurements[activeMeasurementCategory][currentImageIndex] ? (
-              <>
-                <div className="measurement-display">
-                  <img
-                    src={measurements[activeMeasurementCategory][currentImageIndex].image}
-                    alt={measurements[activeMeasurementCategory][currentImageIndex].label}
-                  />
-                  <MeasurementCard 
-                  label={measurements[activeMeasurementCategory][currentImageIndex].label} 
-                  onChange={(value) => handleInputChange(measurements[activeMeasurementCategory][currentImageIndex].label, value)} 
-                  value={formData.measurements[measurements[activeMeasurementCategory][currentImageIndex].label] || ""} />
-                </div>
-                
-                <div className="navigation-buttons">
-                  <button onClick={() => handleArrowButtonNavigation("left")}>← Prev</button>
-                  <button onClick={() => handleArrowButtonNavigation("right")}>Next →</button>
-                </div>
-              </>
-            ) : (
-              <p>No measurements available for this category</p>
-            )}
-          </div>
-        )}
-        
-        <button onClick={handleSubmitMeasurements} className="submit-button"
-        disabled={!Object.keys(formData.measurements).every(key => formData.measurements[key] !== "")}
+        <div className="name-phone-container">
+          <input
+            type="text"
+            placeholder="Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="input-field"
+          />
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            value={formData.phone}
+            maxLength="10"
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value) && value.length <= 10) {
+                setFormData({ ...formData, phone: value });
+              }
+            }}
+            className="input-field"
+          />
+        </div>
+
+        <button
+          onClick={handleNext}
+          className="next-button"
+          disabled={formData.name === "" || formData.phone === ""}
         >
-          Save Measurements
+          Next
         </button>
       </div>
-
-      {showSuccessMessage && (
-        <div className="success-overlay">
-          <div className="success-message">
-            <h3>Customer details saved successfully!</h3>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

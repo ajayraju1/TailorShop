@@ -1,3 +1,25 @@
+/* Home Page Styling */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  animation: slideUp 1s ease-out;
+  background: #f4fcf9;
+}
+
+.home-page h1 {
+  color: #202020;
+  font-size: 28px;
+  font-weight: 500;
+  /* text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); */
+  margin-bottom: 20px;
+}
+
 
 /* Navbar Styling */
 .navbar {
@@ -5,7 +27,7 @@
     justify-content: space-between;
     align-items: center;
   
-    padding: 15px 20px;
+    padding: 20px 20px;
     margin-top: 10px;
     border-radius: 12px;
     background: black;
@@ -39,9 +61,9 @@
     transition: all 0.3s ease;
   }
   
-  .navbar-btn:hover {
+  /* .navbar-btn:hover {
     background-color: #f58088;
-  }
+  } */
   
   .page {
     animation: fadeIn 1s ease-out;
@@ -65,52 +87,63 @@
     }
   }
   
-  /* Home Page Styling */
-.home-page {
-    margin-top: 15%;
-    text-align: center;
-    padding: 20px;
-    animation: slideUp 1s ease-out;
-  }
-  
-  .home-page h1 {
-    color: #202020;
-    font-size: 28px;
-    font-weight: 500;
-    /* text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); */
-    margin-bottom: 20px;
-  }
-  
-  .measurement-options {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  /* Men button style */
-  .men-button {
-    background-color: #5973aa; /* Dark blue */
-    color: white;
-  }
-  
-  .men-button:hover {
-    background-color: #457b9d; /* Lighter blue on hover */
-  }
-  
-  /* Women button style */
-  .women-button {
-    background-color: #fc9baf;
-    color: rgb(255, 255, 255);
-  }
-  
-  .women-button:hover {
-    background-color: #f7637c; /* Darker red on hover */
-  }
 
-  @media (max-width: 768px) {
-    .home-page h1 {
-      font-size: 22px;
-    }
+.measurement-options {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.category-card {
+  position: relative;
+  flex: 1;
+  width: 100%; 
+  margin: -3px auto;
+  height: 50%;
+  overflow: hidden;
+}
+
+.category-card img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.men-button, .women-button {
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.men-button {
+  background-color: #344874;
+  color: white;
+  width: 122px;
+}
+
+.men-button:hover {
+  background-color: #254457;
+}
+
+.women-button {
+  background-color: #f76fb1;
+  color: white;
+}
+
+.women-button:hover {
+  background-color: #f7637c;
+}
+
+@media (max-width: 768px) {
+  .home-page h1 {
+    font-size: 22px;
   }
+}

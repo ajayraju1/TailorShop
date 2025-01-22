@@ -1,34 +1,14 @@
-// import React from "react";
-
-// const MeasurementCard = ({ label, image, onChange }) => {
-//   return (
-//     <div className="measurement-card">
-//       <img src={image} alt={label} className="measurement-image" />
-//       <div className="measurement-input">
-//         <h3>{label}</h3>
-//         <input
-//           type="number"
-//           placeholder={`Enter ${label}`}
-//           onChange={(e) => onChange(e.target.value)}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MeasurementCard;
-
-
-import React from "react";
-
-const MeasurementCard = ({ label, onChange }) => {
+const MeasurementCard = ({ label, onChange, value, image }) => {
   return (
     <div className="measurement-card">
-      <h3>{label} Measurement</h3>
+      <img src={image} alt={label} className="measurement-image" />
+      <label className="measurement-label">{label}</label>
       <input
         type="number"
-        placeholder={`Enter ${label} measurement`}
+        value={value}
         onChange={(e) => onChange(e.target.value)}
+        className="measurement-input"
+        placeholder={`Enter ${label}`}
       />
     </div>
   );
