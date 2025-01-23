@@ -7,6 +7,8 @@ const LoginPage = ({ onLogin }) => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [pin, setPin] = useState(Array(6).fill(""));
+  const [error, setError] = useState("");
+  const [successMessage, ] = useState("");
 
   const handlePinChange = (value, index) => {
     // Only allow numbers
@@ -36,29 +38,50 @@ const LoginPage = ({ onLogin }) => {
     }
   };
 
+
+
   const handleLogin = async () => {
+    setError(""); // Reset any previous errors
+  
     // Validate phone number before login
     if (phoneNumber.length !== 10) {
-      alert("Please enter a valid 10-digit phone number");
+      setError("Please enter a valid 10-digit phone number");
       return;
     }
-
+  
+    // Validate PIN - check if all digits are filled
+    if (pin.some(digit => digit === "")) {
+      setError("Please enter all 6 digits of your PIN");
+      return;
+    }
+  
     try {
       const response = await axios.post("https://tailorlog.onrender.com/api/users/login", {
         phone: phoneNumber,
-        pin: pin.join("")
+        pin: pin.join(""),
       });
-      console.log(response.data.message);
-      onLogin();
-      navigate('/');
+  
+      if (response.data.message === 'Login successful') {
+        console.log("Login successful! Navigating to home page...");
+        onLogin(); // This will trigger the state update in App.js
+        navigate('/'); // Now navigate to home page after state change
+      } else {
+        setError(response.data.message || "Login failed. Please try again.");
+      }
     } catch (error) {
+      setError(error.response?.data?.message || "Login failed. Please check your credentials and try again.");
       console.error("Error logging in:", error);
     }
   };
+  
+  
+  
 
   return (
     <div className="login-page">
       <h2>Login</h2>
+      {error && <div className="error-message">{error}</div>}
+      {successMessage && <div className="success-message">{successMessage}</div>}
       <input
         type="tel"
         placeholder="Phone Number"

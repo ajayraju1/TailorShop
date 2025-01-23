@@ -80,62 +80,73 @@ const MeasurementInputPage = () => {
 
   const handleSubmit = async () => {
     try {
-      // Check if all measurements are entered
-      const allMeasurementsEntered = currentMeasurements.every(
-        m => measurements[m.label.toLowerCase().replace(' ', '_')] != null
-      );
-  
-      if (!allMeasurementsEntered) {
-        alert("Please enter all measurements before saving.");
+      // Validate name (minimum 2 characters)
+      if (name.trim().length < 2) {
+        alert("Please enter a valid name (minimum 2 characters)");
         return;
       }
-  
-      // Validate customer data (name and phone)
-      if (!name || !phone) {
-        alert("Name and phone number are required.");
-        return;
-      }
-  
-      // Structure the measurements object to match the backend schema
+
+      // Validate measurements (ensure all values are positive numbers)
       const structuredMeasurements = {};
-      currentMeasurements.forEach(measurement => {
+      for (const measurement of currentMeasurements) {
         const key = measurement.label.toLowerCase().replace(' ', '_');
-        structuredMeasurements[key] = measurements[key] || 0; // Default to 0 if no value
-      });
-  
-      // Update the measurementData to pass name and phone at the top level
+        const value = parseFloat(measurements[key]);
+        
+        if (isNaN(value) || value <= 0) {
+          alert(`Please enter a valid measurement for ${measurement.label}`);
+          return;
+        }
+        structuredMeasurements[key] = value;
+      }
+
       const measurementData = {
-        name,           // Pass name directly
-        mobile: phone,  // Pass phone as 'mobile'
-        category,       // Pass category
-        measurements: structuredMeasurements
+        name: name.trim(),
+        mobile: phone.trim(),
+        category: category.toLowerCase(),
+        measurements: structuredMeasurements,
+        date: new Date().toISOString().split('T')[0] // Format as YYYY-MM-DD
       };
-  
-      console.log('Measurement Data:', measurementData); // For debugging
-  
-      const response = await axios.post("https://tailorlog.onrender.com/api/customers", measurementData);
-  
-      if (response.data) {
-        setShowSuccess(true);
-        // Navigate after showing success message for 2 seconds
-        setTimeout(() => {
-          setShowSuccess(false);
-          navigate("/storage");
-        }, 2000);
+
+      console.log('Sending data:', measurementData);
+
+      try {
+        // Try to save the data
+        await axios.post("https://tailorlog.onrender.com/api/customers", measurementData);
+        handleSuccess();
+      } catch (error) {
+        // If error is 409 (Conflict) or contains "already existed", treat as success
+        if (error.response?.status === 409 || 
+            error.response?.data?.message?.includes('already existed')) {
+          handleSuccess();
+        } else {
+          throw error; // Throw other errors to be caught by outer catch
+        }
       }
     } catch (error) {
-      // Log the full error details for better debugging
-      console.error("Error details:", error.response ? error.response.data : error.message); // Log full error data
-      
-      if (error.response) {
-        console.error("Backend error response:", error.response.data);
-        alert(`Failed to save measurements. Error: ${error.response.data.message || 'Unknown error'}`);
-      } else {
-        alert("Network error or server is down. Please try again later.");
-      }
+      console.error("Error details:", error);
+      handleError(error);
     }
   };
-  
+
+  // Separate function to handle success
+  const handleSuccess = () => {
+    setShowSuccess(true);
+    setTimeout(() => {
+      setShowSuccess(false);
+      navigate("/storage", { replace: true });
+    }, 2500);
+  };
+
+  // Separate function to handle errors
+  const handleError = (error) => {
+    if (error.response?.data?.errors) {
+      console.error("Validation errors:", error.response.data.errors);
+      const errorMessage = Object.values(error.response.data.errors).join('\n');
+      alert(`Validation errors:\n${errorMessage}`);
+    } else {
+      alert(error.response?.data?.message || "Failed to save measurements");
+    }
+  };
 
   return (
     <div className="measurement-input-page">

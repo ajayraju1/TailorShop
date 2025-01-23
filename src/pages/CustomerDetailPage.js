@@ -1,50 +1,52 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import "../css/CustomerDetailPage.css";
 
-const CustomerDetailsPage = () => {
-  const { state: { customer } } = useLocation();
+const CustomerDetailPage = () => {
+  const { customerId } = useParams();
+  const [customerData, setCustomerData] = useState(null);
 
-  // Destructure customer details for easy access
-  const { name, phone, category, measurements } = customer || {};
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      try {
+        const response = await axios.get(
+          `https://tailorlog.onrender.com/api/customers/${customerId}`
+        );
+        setCustomerData(response.data);
+      } catch (error) {
+        console.error("Error fetching customer data:", error);
+      }
+    };
 
-  // Separate measurements by category
-  const shirtMeasurements = category === 'shirt' ? measurements : {};
-  const pantMeasurements = category === 'pant' ? measurements : {};
+    fetchCustomerData();
+  }, [customerId]);
+
+  if (!customerData) return <div>Loading...</div>;
 
   return (
-    <div className="customer-details-page">
-      <h2>Customer Details</h2>
-      <p><strong>Name:</strong> {name}</p>
-      <p><strong>Phone:</strong> {phone}</p>
-
-      {category === 'shirt' && shirtMeasurements && Object.keys(shirtMeasurements).length > 0 && (
-        <div className="measurements">
-          <h3>Shirt Measurements</h3>
-          {Object.entries(shirtMeasurements).map(([key, value]) => (
-            <div key={key}>
-              <strong>{key.replace('_', ' ').toUpperCase()}:</strong> {value}
-            </div>
-          ))}
+    <div className="customer-detail-page">
+      <div className="header">
+        <div>
+          <h2>{customerData.name}</h2>
+          <p>{customerData.mobile}</p>
         </div>
-      )}
+        <a href={`tel:${customerData.mobile}`} className="phone-icon">
+          📞
+        </a>
+      </div>
 
-      {category === 'pant' && pantMeasurements && Object.keys(pantMeasurements).length > 0 && (
-        <div className="measurements">
-          <h3>Pant Measurements</h3>
-          {Object.entries(pantMeasurements).map(([key, value]) => (
-            <div key={key}>
-              <strong>{key.replace('_', ' ').toUpperCase()}:</strong> {value}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {(!shirtMeasurements || Object.keys(shirtMeasurements).length === 0) &&
-       (!pantMeasurements || Object.keys(pantMeasurements).length === 0) && (
-        <p>No measurements available for this customer.</p>
-      )}
+      <h3>Measurements</h3>
+      <div className="measurement-cards">
+        {Object.entries(customerData.measurements).map(([key, value]) => (
+          <div className="measurement-card" key={key}>
+            <h4>{key.replace("_", " ").toUpperCase()}</h4>
+            <p>{value}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default CustomerDetailsPage;
+export default CustomerDetailPage;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { FaHome, FaUsers } from "react-icons/fa"; 
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"; 
+import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa"; 
 import HomePage from "./pages/HomePage";
 import MeasurementsPage from "./pages/MeasurementsPage";
 import StoragePage from "./pages/StoragePage";
@@ -20,6 +20,12 @@ const App = () => {
     localStorage.setItem('isAuthenticated', 'true');
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('isAuthenticated');
+    window.location.href = '/login';
+  };
+
   return (
     <Router>
       <div className="app">
@@ -35,12 +41,21 @@ const App = () => {
               <button className="navbar-btn" onClick={() => window.location.href = '/storage'}>
                 <FaUsers size={24} />
               </button>
+              <button className="navbar-btn" onClick={handleLogout}>
+                <FaSignOutAlt size={24} />
+              </button>
             </div>
           )}
         </nav>
         <Routes>
-          <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <LoginPage onLogin={handleLogin} />} />
-          <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
+          <Route 
+            path="/login" 
+            element={isAuthenticated ? <Navigate to="/" /> : <LoginPage onLogin={handleLogin} />} 
+          />
+          <Route 
+            path="/" 
+            element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} 
+          />
           <Route path="/measurements/:gender" element={isAuthenticated ? <MeasurementsPage /> : <Navigate to="/login" />} />
           <Route path="/storage" element={isAuthenticated ? <StoragePage /> : <Navigate to="/login" />} />
           <Route path="/customer-detail/:customerId" element={<CustomerDetailPage />} />

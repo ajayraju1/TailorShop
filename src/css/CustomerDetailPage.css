@@ -1,0 +1,52 @@
+.customer-detail-page {
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .header p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .phone-icon {
+    font-size: 24px;
+    color: green;
+    text-decoration: none;
+  }
+  
+  .measurement-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .measurement-card {
+    width: 200px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .measurement-card h4 {
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .measurement-card p {
+    font-size: 16px;
+    margin: 0;
+  }
+  

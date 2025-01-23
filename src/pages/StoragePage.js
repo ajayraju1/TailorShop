@@ -94,6 +94,7 @@ const StoragePage = () => {
           return (
             <CustomerCard
               key={customer._id}
+              customerId={customer._id}
               name={customer.name}
               phone={customer.phone}
               onEdit={() => handleEdit(customer)}

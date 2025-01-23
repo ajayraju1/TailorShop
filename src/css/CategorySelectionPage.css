@@ -46,8 +46,8 @@
   box-shadow: 0 0 5px rgba(54, 54, 54, 0.3);
 }
 
-.next-button {
-  padding: 12px 40px;
+.next-button-cat{
+  width: 40%;
   background-color: #618ac6;
   color: white;
   border: none;
@@ -57,11 +57,11 @@
   transition: background-color 0.3s;
 }
 
-.next-button:hover {
+.next-button-cat:hover {
   background-color: #386fae;
 }
 
-.next-button:disabled {
+.next-button-cat:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 } 

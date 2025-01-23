@@ -37,18 +37,20 @@
   }
   
   /* Input Fields */
-  .input-field {
-    padding: 14px 18px;
-    font-size: 1rem;
-    margin: 12px 0;
+  input[type="text"] {
+    width: 100%;
+    max-width: 100%;
+    height: 50px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 18px;
     border: 2px solid #ccc;
     border-radius: 8px;
+    text-align: start;
+    background-color: #fefefe;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    outline: none;
-    width: 100%;
-    background-color: #f9f9f9; 
-    color: #333; /* Dark text color */
-  }
+}
   
   .input-field:focus {
     border: 2px solid  #151515;
@@ -75,7 +77,28 @@
     display: inline-block;
     font-weight: 600;
   }
+
+  .next-button{
+    width: 60%;
+    margin-left: 20%;
+    background-color: #618ac6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
   
+  .next-button:hover {
+    background-color: #386fae;
+  }
+  
+  .next-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
   .save-name-phone-button:disabled {
     background-color: #2d6080;
     cursor: not-allowed;
@@ -217,7 +240,21 @@
   }
   
   /* Responsive Design */
+  @media (max-width: 480px) {
+    input[type="text"] {
+        height: 40px;
+        font-size: 14px;
+    }
+}
+
   @media (max-width: 768px) {
+
+    input[type="text"] {
+      width: 100%;
+      height: 40px;
+      font-size: 16px;
+  }
+
     .measurements-page {
       padding: 15px;
       margin: 20px auto;

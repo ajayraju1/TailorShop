@@ -44,7 +44,7 @@ const CategorySelectionPage = () => {
 
         <button 
           onClick={handleNext}
-          className="next-button"
+          className="next-button-cat"
           disabled={!selectedCategory}
         >
           Next
