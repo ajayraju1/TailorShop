@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
+import axiosInstance from "../utils/axios";
 
 const EditCustomerPage = () => {
   const location = useLocation();
@@ -53,33 +54,25 @@ const EditCustomerPage = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccessMessage("");
-    setLoading(true);
-
+  const handleSubmit = async () => {
     try {
-      // Validate measurements
-      for (const field of measurementFields) {
-        const value = parseFloat(formData.measurements[field.key]);
-        if (isNaN(value) || value <= 0) {
-          setError(`Please enter a valid measurement for ${field.label}`);
-          return;
-        }
-      }
+      setLoading(true);
+      setError("");
 
-      const response = await axios.put(
-        `${config.API_BASE_URL}/customers/${customer._id}`,
-        { measurements: formData.measurements }
-      );
+      const response = await axiosInstance.put(`/customers/${customer._id}`, {
+        name: formData.name,
+        mobile: formData.phone,
+        measurements: formData.measurements,
+      });
 
-      if (response.data.message === "Customer updated successfully") {
-        setSuccessMessage("Customer measurements updated successfully!");
-        setTimeout(() => navigate("/storage"), 2000);
+      if (response.data) {
+        setSuccessMessage("Customer updated successfully!");
+        setTimeout(() => {
+          navigate("/storage");
+        }, 2000);
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Error updating measurements");
+      setError(error.response?.data?.message || "Error updating customer");
     } finally {
       setLoading(false);
     }
