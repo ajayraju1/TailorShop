@@ -5,10 +5,16 @@
   /* background: #f4fcf9; */
 }
 
+@media screen and (min-width: 768px) {
+  .measurement-input-page {
+    width: 1200px;
+  }
+}
+
 .measurement-input-page h2 {
-    font-size: 20px;
-    text-align: center;
-    margin: 10px 0;
+  font-size: 20px;
+  text-align: center;
+  margin: 10px 0;
 }
 
 .customer-info {
@@ -31,7 +37,6 @@
   border-radius: 8px;
   flex: 1;
 }
-
 
 .measurement-container {
   padding: 20px;
@@ -71,33 +76,39 @@
 
 .save-button:hover {
   background-color: #218838;
-} 
+}
 
 .measurement-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .measurement-card {
+    margin: auto;
   }
-  
-  .measurement-image {
-    width: 200px;
-    height: auto;
-    margin-bottom: 10px;
-  }
-  
-  .measurement-label {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .measurement-input {
-    padding: 5px;
-    font-size: 1rem;
-    text-align: center;
-  }
+}
+
+.measurement-image {
+  width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.measurement-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.measurement-input {
+  padding: 5px;
+  font-size: 1rem;
+  text-align: center;
+}
 
 .success-overlay {
   position: fixed;
@@ -118,11 +129,10 @@
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .success-message h3 {
   color: #ffffff;
   margin-bottom: 10px;
 }
-  
-  

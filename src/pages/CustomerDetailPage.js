@@ -1,28 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../utils/axios";
+import "../css/common.css";
 import "../css/CustomerDetailPage.css";
+import config from "../config/config.js";
 
 const CustomerDetailPage = () => {
   const { customerId } = useParams();
   const [customerData, setCustomerData] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCustomerData = async () => {
       try {
-        const response = await axios.get(
-          `https://tailorlog.onrender.com/api/customers/${customerId}`
-        );
-        setCustomerData(response.data);
+        setLoading(true);
+        const response = await axiosInstance.get(`/customers/${customerId}`);
+        if (response.data) {
+          setCustomerData(response.data);
+        } else {
+          setError("Customer data not found");
+        }
       } catch (error) {
+        setError(
+          error.response?.data?.message || "Error fetching customer data"
+        );
         console.error("Error fetching customer data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchCustomerData();
   }, [customerId]);
 
-  if (!customerData) return <div>Loading...</div>;
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  if (!customerData) return <div className="error-message">No data found</div>;
 
   return (
     <div className="customer-detail-page">

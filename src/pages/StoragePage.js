@@ -1,115 +1,149 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axios";
 import CustomerCard from "../components/CustomerCard";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../components/ConfirmationModal";
+import config from "../config/config.js";
+import LoadingSpinner from "../components/LoadingSpinner";
+import "../css/StoragePage.css";
 
 const StoragePage = () => {
   const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCustomerId, setSelectedCustomerId] = useState(null);
+  const [selectedCustomerName, setSelectedCustomerName] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [search, setSearch] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [customerToDelete, setCustomerToDelete] = useState(null);
-  const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchCustomers();
-  }, []);
-
-  const fetchCustomers = () => {
-    axios
-      .get("https://tailorlog.onrender.com/api/customers")
-      .then((response) => {
-        // console.log("Fetched customers:", response.data);  // Log the customer data
-        const normalizedCustomers = response.data.map((customer) => {
-          // Normalize phone field to be 'phone'
-          if (customer.mobile) {
-            customer.phone = customer.mobile;
-            delete customer.mobile; // Remove mobile if it's set
-          }
-          return customer;
-        });
+  const fetchCustomers = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const response = await axiosInstance.get("/customers");
+      if (response.data) {
+        const normalizedCustomers = response.data.map((customer) => ({
+          ...customer,
+          phone: customer.mobile || customer.phone,
+        }));
         setCustomers(normalizedCustomers);
-      })
-      .catch((error) => console.error("Error fetching customers:", error));
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "Error fetching customers");
+      console.error("Error fetching customers:", error);
+    } finally {
+      setLoading(false);
+    }
   };
-  
 
   const handleEdit = (customer) => {
     navigate(`/edit-customer`, { state: { customer } });
   };
 
-  const handleDelete = (id, event) => {
+  const handleDelete = (customer, event) => {
     event.preventDefault();
-
-    const rect = event.target.getBoundingClientRect();
-    setModalPosition({
-      top: rect.top + window.scrollY,
-      left: rect.left + window.scrollX,
-    });
-    setCustomerToDelete(id);
-    setIsModalOpen(true);
+    setSelectedCustomerId(customer._id);
+    setSelectedCustomerName(customer.name);
+    setShowModal(true);
   };
 
-  const confirmDelete = async (id) => {
+  const confirmDelete = async () => {
+    if (!selectedCustomerId) return;
+
     try {
-      await axios.delete(
-        `https://tailorlog.onrender.com/api/customers/${customerToDelete}`
+      setIsDeleting(true);
+      setError("");
+
+      const response = await axiosInstance.delete(
+        `/customers/${selectedCustomerId}`
       );
-      setCustomers(
-        customers.filter((customer) => customer._id !== customerToDelete)
-      );
-      setIsModalOpen(false);
+
+      if (response.status === 200) {
+        setCustomers((prevCustomers) =>
+          prevCustomers.filter((c) => c._id !== selectedCustomerId)
+        );
+        setSuccessMessage(`${selectedCustomerName} deleted successfully`);
+        setTimeout(() => setSuccessMessage(""), 3000);
+      }
     } catch (error) {
-      console.error("Error deleting customer:", error);
-      alert("Failed to delete customer.");
+      console.error("Delete error:", error);
+      setError(error.response?.data?.message || "Error deleting customer");
+    } finally {
+      setIsDeleting(false);
+      setShowModal(false);
+      setSelectedCustomerId(null);
+      setSelectedCustomerName("");
     }
   };
 
   const cancelDelete = () => {
-    setIsModalOpen(false);
+    setShowModal(false);
+    setSelectedCustomerId(null);
+    setSelectedCustomerName("");
   };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  if (loading) return <LoadingSpinner />;
+  if (error) return <div className="error-message">{error}</div>;
+
+  const filteredCustomers = customers.filter(
+    (customer) =>
+      customer.name.toLowerCase().includes(search.toLowerCase()) ||
+      customer.phone.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="storage-page">
-      <h2>All Customers</h2>
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search customers"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="search-bar"
-        />
+      {successMessage && (
+        <div className="message success-message">{successMessage}</div>
+      )}
+      {error && <div className="message error-message">{error}</div>}
+
+      <div className="page-header">
+        <h2>Customer Directory</h2>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search by name or phone number..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="search-bar"
+          />
+        </div>
       </div>
 
-      {customers
-        .filter(
-          (customer) =>
-            customer.name.toLowerCase().includes(search.toLowerCase()) ||
-            customer.phone.toLowerCase().includes(search.toLowerCase())
-        )
-        .map((customer) => {
-          // console.log("Customer card props:", customer);  // Log the customer object for each card
-          return (
+      {filteredCustomers.length === 0 && !loading ? (
+        <div className="no-results">No customers found</div>
+      ) : (
+        <div className="customers-grid">
+          {filteredCustomers.map((customer) => (
             <CustomerCard
               key={customer._id}
               customerId={customer._id}
               name={customer.name}
               phone={customer.phone}
               onEdit={() => handleEdit(customer)}
-              onDelete={(event) => handleDelete(customer._id, event)}
+              onDelete={(event) => handleDelete(customer, event)}
             />
-          );
-        })}
+          ))}
+        </div>
+      )}
 
       <ConfirmationModal
-        isOpen={isModalOpen}
+        isOpen={showModal}
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
-        message="Are you sure you want to delete this customer?"
-        customerId={customerToDelete}
-        position={modalPosition}
+        title="Delete Customer"
+        message={`Are you sure you want to delete ${selectedCustomerName}? This action cannot be undone.`}
+        confirmText={isDeleting ? "Deleting..." : "Delete"}
+        cancelText="Cancel"
+        isLoading={isDeleting}
       />
     </div>
   );

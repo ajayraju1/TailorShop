@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import '../css/LoginPage.css';
+import LoadingSpinner from "../components/LoadingSpinner";
+import config from "../config/config.js";
+import "../css/LoginPage.css";
 
 const LoginPage = ({ onLogin }) => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [pin, setPin] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
-  const [successMessage, ] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePinChange = (value, index) => {
     // Only allow numbers
@@ -16,10 +19,10 @@ const LoginPage = ({ onLogin }) => {
       const newPin = [...pin];
       newPin[index] = value;
       setPin(newPin);
-      
+
       // Move to next input if a digit was entered and there is a next input
       if (value && index < pin.length - 1) {
-        const nextInput = document.querySelectorAll('.pin-box')[index + 1];
+        const nextInput = document.querySelectorAll(".pin-box")[index + 1];
         if (nextInput) {
           nextInput.focus();
         }
@@ -29,66 +32,69 @@ const LoginPage = ({ onLogin }) => {
 
   const handleKeyDown = (e, index) => {
     // Handle backspace
-    if (e.key === 'Backspace' && !pin[index] && index > 0) {
+    if (e.key === "Backspace" && !pin[index] && index > 0) {
       // Move to previous input if current input is empty
-      const prevInput = document.querySelectorAll('.pin-box')[index - 1];
+      const prevInput = document.querySelectorAll(".pin-box")[index - 1];
       if (prevInput) {
         prevInput.focus();
       }
     }
   };
 
-
-
   const handleLogin = async () => {
-    setError(""); // Reset any previous errors
-  
-    // Validate phone number before login
+    setError("");
+    setSuccessMessage("");
+
     if (phoneNumber.length !== 10) {
       setError("Please enter a valid 10-digit phone number");
       return;
     }
-  
-    // Validate PIN - check if all digits are filled
-    if (pin.some(digit => digit === "")) {
+
+    if (pin.some((digit) => digit === "")) {
       setError("Please enter all 6 digits of your PIN");
       return;
     }
-  
+
     try {
-      const response = await axios.post("https://tailorlog.onrender.com/api/users/login", {
+      setIsLoading(true);
+      const response = await axios.post(`${config.API_BASE_URL}/users/login`, {
         phone: phoneNumber,
         pin: pin.join(""),
       });
-  
-      if (response.data.message === 'Login successful') {
-        console.log("Login successful! Navigating to home page...");
-        onLogin(); // This will trigger the state update in App.js
-        navigate('/'); // Now navigate to home page after state change
+
+      // Check if response has data and token
+      if (response.data.message === "Login successful") {
+        setSuccessMessage("Login successful!");
+        onLogin(response.data.token);
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
       } else {
-        setError(response.data.message || "Login failed. Please try again.");
+        setError("Invalid response from server");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed. Please check your credentials and try again.");
-      console.error("Error logging in:", error);
+      console.error("Login error:", error);
+      setError(
+        error.response?.data?.message || "Invalid credentials or server error"
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
-  
-  
-  
 
   return (
     <div className="login-page">
       <h2>Login</h2>
       {error && <div className="error-message">{error}</div>}
-      {successMessage && <div className="success-message">{successMessage}</div>}
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
       <input
         type="tel"
         placeholder="Phone Number"
         value={phoneNumber}
         maxLength="10"
         onChange={(e) => {
-          // Only allow numbers and maximum 10 digits
           const value = e.target.value;
           if (/^\d*$/.test(value) && value.length <= 10) {
             setPhoneNumber(value);
@@ -111,6 +117,10 @@ const LoginPage = ({ onLogin }) => {
         ))}
       </div>
       <button onClick={handleLogin}>Login</button>
+      <p className="signup-link">
+        Don't have an account?{" "}
+        <span onClick={() => navigate("/signup")}>Sign up here</span>
+      </p>
     </div>
   );
 };

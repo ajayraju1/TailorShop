@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"; 
-import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa"; 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa";
 import HomePage from "./pages/HomePage";
 import MeasurementsPage from "./pages/MeasurementsPage";
 import StoragePage from "./pages/StoragePage";
@@ -9,21 +14,22 @@ import LoginPage from "./pages/LoginPage";
 import CategorySelectionPage from "./pages/CategorySelectionPage";
 import MeasurementInputPage from "./pages/MeasurementInputPage";
 import CustomerDetailPage from "./pages/CustomerDetailPage";
+import SignupPage from "./pages/SignupPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('isAuthenticated') === 'true';
+    return localStorage.getItem("isAuthenticated") === "true";
   });
 
   const handleLogin = () => {
     setIsAuthenticated(true);
-    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem("isAuthenticated", "true");
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('isAuthenticated');
-    window.location.href = '/login';
+    localStorage.removeItem("isAuthenticated");
+    window.location.href = "/login";
   };
 
   return (
@@ -35,10 +41,16 @@ const App = () => {
           </div>
           {isAuthenticated && (
             <div className="navbar-links">
-              <button className="navbar-btn" onClick={() => window.location.href = '/'}>
+              <button
+                className="navbar-btn"
+                onClick={() => (window.location.href = "/")}
+              >
                 <FaHome size={24} />
               </button>
-              <button className="navbar-btn" onClick={() => window.location.href = '/storage'}>
+              <button
+                className="navbar-btn"
+                onClick={() => (window.location.href = "/storage")}
+              >
                 <FaUsers size={24} />
               </button>
               <button className="navbar-btn" onClick={handleLogout}>
@@ -48,20 +60,66 @@ const App = () => {
           )}
         </nav>
         <Routes>
-          <Route 
-            path="/login" 
-            element={isAuthenticated ? <Navigate to="/" /> : <LoginPage onLogin={handleLogin} />} 
+          <Route
+            path="/login"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/" />
+              ) : (
+                <LoginPage onLogin={handleLogin} />
+              )
+            }
           />
-          <Route 
-            path="/" 
-            element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} 
+          <Route
+            path="/"
+            element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />}
           />
-          <Route path="/measurements/:gender" element={isAuthenticated ? <MeasurementsPage /> : <Navigate to="/login" />} />
-          <Route path="/storage" element={isAuthenticated ? <StoragePage /> : <Navigate to="/login" />} />
-          <Route path="/customer-detail/:customerId" element={<CustomerDetailPage />} />
-          <Route path="/edit-customer" element={isAuthenticated ? <EditCustomerPage /> : <Navigate to="/login" />} />
-          <Route path="/measurements/:gender/categories" element={isAuthenticated ? <CategorySelectionPage /> : <Navigate to="/login" />} />
-          <Route path="/measurements/:gender/:category" element={isAuthenticated ? <MeasurementInputPage /> : <Navigate to="/login" />} />
+          <Route
+            path="/measurements/:gender"
+            element={
+              isAuthenticated ? <MeasurementsPage /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/storage"
+            element={
+              isAuthenticated ? <StoragePage /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/customer-detail/:customerId"
+            element={<CustomerDetailPage />}
+          />
+          <Route
+            path="/edit-customer"
+            element={
+              isAuthenticated ? <EditCustomerPage /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/measurements/:gender/categories"
+            element={
+              isAuthenticated ? (
+                <CategorySelectionPage />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/measurements/:gender/:category"
+            element={
+              isAuthenticated ? (
+                <MeasurementInputPage />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/signup"
+            element={isAuthenticated ? <Navigate to="/" /> : <SignupPage />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

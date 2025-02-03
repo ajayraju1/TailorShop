@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import '../css/CategorySelectionPage.css';
+import "../css/CategorySelectionPage.css";
 
 const CategorySelectionPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { name, phone, gender } = location.state || {};
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleNext = () => {
     if (!selectedCategory) {
@@ -18,8 +18,8 @@ const CategorySelectionPage = () => {
         name,
         phone,
         gender,
-        category: selectedCategory
-      }
+        category: selectedCategory,
+      },
     });
   };
 
@@ -32,8 +32,8 @@ const CategorySelectionPage = () => {
 
       <div className="category-selection">
         <h2>Select Item</h2>
-        <select 
-          value={selectedCategory} 
+        <select
+          value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="category-dropdown"
         >
@@ -42,7 +42,7 @@ const CategorySelectionPage = () => {
           <option value="pant">Pant</option>
         </select>
 
-        <button 
+        <button
           onClick={handleNext}
           className="next-button-cat"
           disabled={!selectedCategory}
@@ -54,4 +54,4 @@ const CategorySelectionPage = () => {
   );
 };
 
-export default CategorySelectionPage; 
+export default CategorySelectionPage;

@@ -1,5 +1,5 @@
 /* General Reset */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
   margin: 0;
@@ -28,6 +28,8 @@ body {
   height: 100%;
   margin: 0 auto;
   backdrop-filter: blur(5px); /* Blurring the background */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Navbar Styling */
@@ -37,11 +39,11 @@ body {
   align-items: center;
   padding: 15px 14px;
   margin: 0 0 20px 0;
-  background: #F5F5DC;
+  background: #f5f5dc;
   transition: all 0.3s ease;
 }
 
-.navbar-brand h2{
+.navbar-brand h2 {
   color: #333333;
   font-weight: 500;
 }
@@ -129,15 +131,22 @@ button:hover {
 .category-card {
   position: relative;
   flex: 1;
-  width: 100%; 
+  width: 100%;
   margin: -3px auto;
   height: 50%;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 
+@media screen and (min-width: 768px) {
+  .category-card {
+    width: 50%;
+  }
+}
 .category-card img {
   width: 100%;
   object-fit: cover;
+  border-radius: 5px 5px 0 0;
 }
 
 /* .submit-button {
@@ -191,7 +200,8 @@ button:hover {
   gap: 20px;
   padding: 20px;
   border-radius: 12px;
-  background: linear-gradient(to bottom right, #effaef, #fefefe);  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom right, #effaef, #fefefe);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -204,16 +214,16 @@ button:hover {
   transition: all 0.3s ease;
   outline: none;
   width: 100%;
-  background-color: #f9f9f9; 
+  background-color: #f9f9f9;
   color: #333333; /* Dark text color */
 }
 
 .input-field:focus {
-  background-color: #f8fbf7; 
+  background-color: #f8fbf7;
   border-color: #5f5f5f;
   transform: scale(1.02);
   box-shadow: 0 2px 4px rgba(54, 54, 54, 0.96);
-  color: #333333; 
+  color: #333333;
 }
 
 .input-field::placeholder {
@@ -283,7 +293,8 @@ button:hover {
   border: 1.8px solid #1d3557;
   border-radius: 12px;
   color: #333333;
-  background: linear-gradient(to bottom right, #e9f7f5, #fefefe);  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom right, #e9f7f5, #fefefe);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   flex-wrap: wrap;
   opacity: 0;
@@ -310,7 +321,6 @@ button:hover {
   margin-top: 5px;
 }
 
-
 .measurement-card .measurement-input h3 {
   margin: 5px;
   color: #0b0b0b;
@@ -325,13 +335,12 @@ button:hover {
   border: 2px solid #ddd;
 }
 
-
 .measurement-card .measurement-input input:focus {
   border: 2x solid #0e0e0e;
   background-color: #f8fbf7;
   transform: scale(1.02);
   box-shadow: 0 2px 6px rgba(9, 9, 9, 0.973);
-  color: #090909; 
+  color: #090909;
 }
 
 .measurement-card div {
@@ -345,7 +354,6 @@ button:hover {
   gap: 20px;
   margin-top: 20px;
 }
-
 
 /* Success message overlay */
 .success-overlay {
@@ -373,14 +381,13 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
   transition: top 0.3s ease, left 0.3s ease;
 }
 
@@ -425,11 +432,10 @@ button:hover {
   opacity: 0.8;
 }
 
-
 /* Customer Card Styling */
 .customer-card {
   background: linear-gradient(120deg, #fff9f8, #e7f7fbc4);
-  color: #1d3557;  
+  color: #1d3557;
   border-radius: 12px;
   padding: 18px;
   margin: 10px 0;
@@ -449,11 +455,18 @@ button:hover {
   color: #1d3557;
 }
 
-.storage-page{
+.storage-page {
   background: #f4fcf9;
+  max-width: 800px;
+  margin: auto;
 }
-
-.storage-page h2{
+@media screen and (min-width: 768px) {
+  .storage-page {
+    width: 1200px;
+    padding: 20px;
+  }
+}
+.storage-page h2 {
   margin: 15px;
   text-align: center;
   font-size: 24px;
@@ -470,7 +483,8 @@ button:hover {
   margin-left: 10px;
 }
 
-.edit-button, .delete-button {
+.edit-button,
+.delete-button {
   padding: 8px 15px;
   border: none;
   border-radius: 4px;
@@ -504,10 +518,10 @@ button:hover {
 
 .search-bar {
   display: block;
-  margin: 20px auto; 
-  width: 50%; 
-  max-width: 400px; 
-  padding: 8px 30px; 
+  margin: 20px auto;
+  width: 50%;
+  max-width: 400px;
+  padding: 8px 30px;
   border: 2px solid #6c6b6b;
   border-radius: 6px;
   font-size: 16px;
@@ -545,7 +559,7 @@ button:hover {
   font-size: 16px;
 }
 
-.customer-info p{
+.customer-info p {
   font-weight: 400;
 }
 
@@ -595,7 +609,6 @@ button:hover {
   border: 2px solid #ccc;
   border-radius: 5px;
 }
-
 
 label {
   font-weight: 500;

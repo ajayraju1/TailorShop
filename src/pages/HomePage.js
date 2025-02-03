@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import menImage from "../assets/images/men bg.jpg"; 
-import womenImage from "../assets/images/women bg.jpg"; 
-import '../css/HomePage.css';
+import menImage from "../assets/images/men bg.jpg";
+import womenImage from "../assets/images/women bg.jpg";
+import "../css/HomePage.css";
 
 const HomePage = () => {
   const navigate = useNavigate();

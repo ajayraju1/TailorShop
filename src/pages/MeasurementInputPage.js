@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../utils/axios";
 import MeasurementCard from "../components/MeasurementCard";
-import '../css/MeasurementInputPage.css';
-
+import "../css/MeasurementInputPage.css";
+import config from "../config/config.js";
+import LoadingSpinner from "../components/LoadingSpinner";
 // Importing images
 import neckImage from "../assets/images/Neck.png";
 import fullShoulderImage from "../assets/images/Full-Shoulder.png";
@@ -27,7 +28,9 @@ const MeasurementInputPage = () => {
   const { name, phone, category } = location.state || {};
   const [currentIndex, setCurrentIndex] = useState(0);
   const [measurements, setMeasurements] = useState({});
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef(null);
 
   const shirtMeasurements = [
@@ -50,7 +53,8 @@ const MeasurementInputPage = () => {
     { label: "Full Crotch", image: fullCrotchImage },
   ];
 
-  const currentMeasurements = category === 'shirt' ? shirtMeasurements : pantMeasurements;
+  const currentMeasurements =
+    category === "shirt" ? shirtMeasurements : pantMeasurements;
 
   useEffect(() => {
     // Focus the input field whenever currentIndex changes
@@ -74,26 +78,24 @@ const MeasurementInputPage = () => {
   const handleMeasurementChange = (value) => {
     setMeasurements({
       ...measurements,
-      [currentMeasurements[currentIndex].label.toLowerCase().replace(' ', '_')]: value
+      [currentMeasurements[currentIndex].label.toLowerCase().replace(" ", "_")]:
+        value,
     });
   };
 
   const handleSubmit = async () => {
     try {
-      // Validate name (minimum 2 characters)
-      if (name.trim().length < 2) {
-        alert("Please enter a valid name (minimum 2 characters)");
-        return;
-      }
+      setIsLoading(true);
+      setError("");
 
-      // Validate measurements (ensure all values are positive numbers)
+      // Validate measurements
       const structuredMeasurements = {};
       for (const measurement of currentMeasurements) {
-        const key = measurement.label.toLowerCase().replace(' ', '_');
+        const key = measurement.label.toLowerCase().replace(" ", "_");
         const value = parseFloat(measurements[key]);
-        
+
         if (isNaN(value) || value <= 0) {
-          alert(`Please enter a valid measurement for ${measurement.label}`);
+          setError(`Please enter a valid measurement for ${measurement.label}`);
           return;
         }
         structuredMeasurements[key] = value;
@@ -104,49 +106,34 @@ const MeasurementInputPage = () => {
         mobile: phone.trim(),
         category: category.toLowerCase(),
         measurements: structuredMeasurements,
-        date: new Date().toISOString().split('T')[0] // Format as YYYY-MM-DD
+        date: new Date().toISOString().split("T")[0],
       };
 
-      console.log('Sending data:', measurementData);
+      const response = await axiosInstance.post("/customers", measurementData);
 
-      try {
-        // Try to save the data
-        await axios.post("https://tailorlog.onrender.com/api/customers", measurementData);
-        handleSuccess();
-      } catch (error) {
-        // If error is 409 (Conflict) or contains "already existed", treat as success
-        if (error.response?.status === 409 || 
-            error.response?.data?.message?.includes('already existed')) {
-          handleSuccess();
-        } else {
-          throw error; // Throw other errors to be caught by outer catch
-        }
+      console.log(response.data.success);
+
+      if (response.data.message === "Customer created successfully") {
+        setSuccessMessage("Measurements saved successfully!");
+        setTimeout(() => {
+          navigate("/storage", { replace: true });
+        }, 100);
       }
     } catch (error) {
-      console.error("Error details:", error);
-      handleError(error);
+      if (error.response?.status === 409) {
+        setSuccessMessage("Customer measurements updated successfully!");
+        setTimeout(() => {
+          navigate("/storage", { replace: true });
+        }, 1000);
+      } else {
+        setError(error.response?.data?.message || "Error saving measurements");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Separate function to handle success
-  const handleSuccess = () => {
-    setShowSuccess(true);
-    setTimeout(() => {
-      setShowSuccess(false);
-      navigate("/storage", { replace: true });
-    }, 2500);
-  };
-
-  // Separate function to handle errors
-  const handleError = (error) => {
-    if (error.response?.data?.errors) {
-      console.error("Validation errors:", error.response.data.errors);
-      const errorMessage = Object.values(error.response.data.errors).join('\n');
-      alert(`Validation errors:\n${errorMessage}`);
-    } else {
-      alert(error.response?.data?.message || "Failed to save measurements");
-    }
-  };
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="measurement-input-page">
@@ -155,7 +142,9 @@ const MeasurementInputPage = () => {
         <p>{phone}</p>
       </div>
 
-      <h2>{category.charAt(0).toUpperCase() + category.slice(1)} Measurements</h2>
+      <h2>
+        {category.charAt(0).toUpperCase() + category.slice(1)} Measurements
+      </h2>
 
       <div className="measurement-container">
         <div className="measurement-progress">
@@ -167,29 +156,41 @@ const MeasurementInputPage = () => {
           label={currentMeasurements[currentIndex].label}
           image={currentMeasurements[currentIndex].image}
           onChange={handleMeasurementChange}
-          value={measurements[currentMeasurements[currentIndex].label.toLowerCase().replace(' ', '_')] || ""}
+          value={
+            measurements[
+              currentMeasurements[currentIndex].label
+                .toLowerCase()
+                .replace(" ", "_")
+            ] || ""
+          }
         />
 
         <div className="navigation-buttons">
-          <button onClick={handlePrevious} disabled={currentIndex === 0}>
+          <button
+            onClick={handlePrevious}
+            disabled={currentIndex === 0 || isLoading}
+          >
             Previous
           </button>
           {currentIndex === currentMeasurements.length - 1 ? (
-            <button onClick={handleSubmit} className="save-button">
-              Save
+            <button
+              onClick={handleSubmit}
+              className="save-button"
+              disabled={isLoading}
+            >
+              {isLoading ? "Saving..." : "Save"}
             </button>
           ) : (
-            <button onClick={handleNext}>Next</button>
+            <button onClick={handleNext} disabled={isLoading}>
+              Next
+            </button>
           )}
         </div>
       </div>
 
-      {showSuccess && (
-        <div className="success-overlay">
-          <div className="success-message">
-            <h3>Measurements saved successfully!</h3>
-          </div>
-        </div>
+      {error && <div className="error-message">{error}</div>}
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
       )}
     </div>
   );

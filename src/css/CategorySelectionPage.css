@@ -2,8 +2,14 @@
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  width: 100%;
 }
 
+@media screen and (min-width: 768px) {
+  .category-page {
+    width: 1200px;
+  }
+}
 .customer-details {
   padding: 12px;
   border-radius: 8px;
@@ -46,7 +52,7 @@
   box-shadow: 0 0 5px rgba(54, 54, 54, 0.3);
 }
 
-.next-button-cat{
+.next-button-cat {
   width: 40%;
   background-color: #618ac6;
   color: white;
@@ -64,4 +70,4 @@
 .next-button-cat:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-} 
+}
