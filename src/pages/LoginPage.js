@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import LoadingSpinner from "../components/LoadingSpinner";
 import config from "../config/config.js";
 import "../css/LoginPage.css";
 
@@ -11,7 +10,7 @@ const LoginPage = ({ onLogin }) => {
   const [pin, setPin] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [ setIsLoading] = useState(false);
 
   const handlePinChange = (value, index) => {
     // Only allow numbers

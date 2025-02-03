@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import "../css/common.css";
 import "../css/CustomerDetailPage.css";
-import config from "../config/config.js";
 
 const CustomerDetailPage = () => {
   const { customerId } = useParams();
