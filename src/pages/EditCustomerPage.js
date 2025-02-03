@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import config from "../config/config.js";
-import "../css/common.css";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const EditCustomerPage = () => {

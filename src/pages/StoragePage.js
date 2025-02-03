@@ -3,7 +3,6 @@ import axiosInstance from "../utils/axios";
 import CustomerCard from "../components/CustomerCard";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../components/ConfirmationModal";
-import config from "../config/config.js";
 import LoadingSpinner from "../components/LoadingSpinner";
 import "../css/StoragePage.css";
 
