@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import MeasurementCard from "../components/MeasurementCard";
 import "../css/MeasurementInputPage.css";
-import config from "../config/config.js";
 import LoadingSpinner from "../components/LoadingSpinner";
 // Importing images
 import neckImage from "../assets/images/Neck.png";
