@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../config/config.js";
 import "../css/LoginPage.css";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const LoginPage = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const LoginPage = ({ onLogin }) => {
   const [pin, setPin] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [ setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePinChange = (value, index) => {
     // Only allow numbers
@@ -83,6 +84,7 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <div className="login-page">
+      {isLoading && <LoadingSpinner />}
       <h2>Login</h2>
       {error && <div className="error-message">{error}</div>}
       {successMessage && (

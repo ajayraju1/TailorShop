@@ -54,7 +54,8 @@ const EditCustomerPage = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       setLoading(true);
       setError("");
@@ -64,12 +65,11 @@ const EditCustomerPage = () => {
         mobile: formData.phone,
         measurements: formData.measurements,
       });
-
-      if (response.data) {
+      if (response.data.message === "Customer updated successfully") {
         setSuccessMessage("Customer updated successfully!");
         setTimeout(() => {
           navigate("/storage");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       setError(error.response?.data?.message || "Error updating customer");
