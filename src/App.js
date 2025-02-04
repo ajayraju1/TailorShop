@@ -25,7 +25,7 @@ const App = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("isAuthenticated");
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   const navigate = useNavigate(); // Hook for programmatic navigation
