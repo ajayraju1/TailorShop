@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa";
 import HomePage from "./pages/HomePage";
 import MeasurementsPage from "./pages/MeasurementsPage";
@@ -15,6 +10,7 @@ import CategorySelectionPage from "./pages/CategorySelectionPage";
 import MeasurementInputPage from "./pages/MeasurementInputPage";
 import CustomerDetailPage from "./pages/CustomerDetailPage";
 import SignupPage from "./pages/SignupPage";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -32,98 +28,97 @@ const App = () => {
     window.location.href = "/login";
   };
 
+  const navigate = useNavigate(); // Hook for programmatic navigation
   return (
-    <Router>
-      <div className="app">
-        <nav className="navbar">
-          <div className="navbar-brand">
-            <h2>TailorLog</h2>
+    <div className="app">
+      <nav className="navbar">
+        <div className="navbar-brand">
+          <h2>TailorLog</h2>
+        </div>
+        {isAuthenticated && (
+          <div className="navbar-links">
+            <button
+              className="navbar-btn"
+              onClick={() => (window.location.href = "/")}
+            >
+              <FaHome size={24} />
+            </button>
+            <button
+              className="navbar-btn"
+              onClick={() => {
+                navigate("/storage");
+              }}
+            >
+              <FaUsers size={24} />
+            </button>
+            <button className="navbar-btn" onClick={handleLogout}>
+              <FaSignOutAlt size={24} />
+            </button>
           </div>
-          {isAuthenticated && (
-            <div className="navbar-links">
-              <button
-                className="navbar-btn"
-                onClick={() => (window.location.href = "/")}
-              >
-                <FaHome size={24} />
-              </button>
-              <button
-                className="navbar-btn"
-                onClick={() => (window.location.href = "/storage")}
-              >
-                <FaUsers size={24} />
-              </button>
-              <button className="navbar-btn" onClick={handleLogout}>
-                <FaSignOutAlt size={24} />
-              </button>
-            </div>
-          )}
-        </nav>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/" />
-              ) : (
-                <LoginPage onLogin={handleLogin} />
-              )
-            }
-          />
-          <Route
-            path="/"
-            element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/measurements/:gender"
-            element={
-              isAuthenticated ? <MeasurementsPage /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/storage"
-            element={
-              isAuthenticated ? <StoragePage /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/customer-detail/:customerId"
-            element={<CustomerDetailPage />}
-          />
-          <Route
-            path="/edit-customer"
-            element={
-              isAuthenticated ? <EditCustomerPage /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/measurements/:gender/categories"
-            element={
-              isAuthenticated ? (
-                <CategorySelectionPage />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/measurements/:gender/:category"
-            element={
-              isAuthenticated ? (
-                <MeasurementInputPage />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/signup"
-            element={isAuthenticated ? <Navigate to="/" /> : <SignupPage />}
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </Router>
+        )}
+      </nav>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/" />
+            ) : (
+              <LoginPage onLogin={handleLogin} />
+            )
+          }
+        />
+        <Route
+          path="/"
+          element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/measurements/:gender"
+          element={
+            isAuthenticated ? <MeasurementsPage /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/storage"
+          element={isAuthenticated ? <StoragePage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/customer-detail/:customerId"
+          element={<CustomerDetailPage />}
+        />
+        <Route
+          path="/edit-customer"
+          element={
+            isAuthenticated ? <EditCustomerPage /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/measurements/:gender/categories"
+          element={
+            isAuthenticated ? (
+              <CategorySelectionPage />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/measurements/:gender/:category"
+          element={
+            isAuthenticated ? (
+              <MeasurementInputPage />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/signup"
+          element={isAuthenticated ? <Navigate to="/" /> : <SignupPage />}
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 };
 
